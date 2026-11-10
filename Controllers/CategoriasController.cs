@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using tp5_Trani_Joaco_Alex.Data;
-using tp5_Trani_Joaco_Alex.Models;
+using MoerEstetica.API.Data;
+using MoerEsteticaBackend.Models;
+using System;
+using System.Threading.Tasks;
 
-namespace tp5_Trani_Joaco_Alex.Controllers
+namespace MoerEstetica.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,64 +20,35 @@ namespace tp5_Trani_Joaco_Alex.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        [AllowAnonymous] // Público para poder filtrar el catálogo en la App Móvil y Web
-        public async Task<IActionResult> GetCategorias([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        // ==========================================
+        // CATEGORÍAS DE PRODUCTOS
+        // ==========================================
+
+        [HttpGet("productos")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetCategoriasProductos()
         {
             try
             {
-                var categorias = await _context.Categorias
-                    .Where(c => c.Activo)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToListAsync();
-
+                var categorias = await _context.Categorias_Productos.ToListAsync();
                 return Ok(categorias);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando categorías.", error = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando categorías de productos.", error = ex.Message });
             }
         }
-        [HttpGet("lista")]
-        public IActionResult ObtenerCategoriasLista()
-        {
-            var categorias = _context.Categorias.Where(c => c.Activo).Select(c => new { c.CategoriaId, c.Nombre }).ToList();
-            return Ok(categorias);
-        }
 
-        [HttpGet("{id}")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetCategoria(int id)
+        [HttpPost("productos")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> CrearCategoriaProducto([FromBody] Categoria_Producto categoria)
         {
+            if (categoria == null) return BadRequest();
             try
             {
-                var categoria = await _context.Categorias
-                    .FirstOrDefaultAsync(c => c.CategoriaId == id && c.Activo);
-
-                if (categoria == null) return NotFound(new { mensaje = "Categoría no encontrada." });
-
-                return Ok(categoria);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando la categoría.", error = ex.Message });
-            }
-        }
-
-        [HttpPost]
-        [Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> CrearCategoria([FromBody] Categoria categoria)
-        {
-            if (categoria == null) return BadRequest(new { mensaje = "La categoría proporcionada es nula." });
-
-            try
-            {
-                categoria.Activo = true; // Nos aseguramos de que nazca activa
-                _context.Categorias.Add(categoria);
+                _context.Categorias_Productos.Add(categoria);
                 await _context.SaveChangesAsync();
-
-                return Ok(new { mensaje = "Categoría creada exitosamente.", categoria });
+                return Ok(new { mensaje = "Categoría de producto creada exitosamente.", categoria });
             }
             catch (Exception ex)
             {
@@ -82,28 +56,21 @@ namespace tp5_Trani_Joaco_Alex.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        [Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> ActualizarCategoria(int id, [FromBody] Categoria categoriaActualizada)
+        [HttpPut("productos/{id}")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> ActualizarCategoriaProducto(int id, [FromBody] Categoria_Producto categoriaActualizada)
         {
-            if (categoriaActualizada == null || id != categoriaActualizada.CategoriaId)
-                return BadRequest(new { mensaje = "Datos inválidos o el ID de la URL no coincide con el del cuerpo." });
-
+            if (id != categoriaActualizada.IdCategoriaProducto) return BadRequest();
             try
             {
-                var categoriaExistente = await _context.Categorias
-                    .FirstOrDefaultAsync(c => c.CategoriaId == id && c.Activo);
+                var categoria = await _context.Categorias_Productos.FindAsync(id);
+                if (categoria == null) return NotFound();
 
-                if (categoriaExistente == null)
-                    return NotFound(new { mensaje = "Categoría no encontrada o inactiva." });
-
-                // Actualizamos solo el nombre sin poner en riesgo el estado Activo
-                categoriaExistente.Nombre = categoriaActualizada.Nombre;
-                categoriaExistente.Descripcion = categoriaActualizada.Descripcion;
+                categoria.Nombre = categoriaActualizada.Nombre;
+                categoria.Descripcion = categoriaActualizada.Descripcion;
 
                 await _context.SaveChangesAsync();
-
-                return Ok(new { mensaje = "Categoría actualizada exitosamente.", categoria = categoriaExistente });
+                return Ok(new { mensaje = "Categoría de producto actualizada.", categoria });
             }
             catch (Exception ex)
             {
@@ -111,23 +78,107 @@ namespace tp5_Trani_Joaco_Alex.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        [Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> EliminarCategoria(int id)
+        [HttpDelete("productos/{id}")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> EliminarCategoriaProducto(int id)
         {
             try
             {
-                var categoria = await _context.Categorias.FindAsync(id);
-                if (categoria == null) return NotFound(new { mensaje = "Categoría no encontrada." });
+                var categoria = await _context.Categorias_Productos.FindAsync(id);
+                if (categoria == null) return NotFound();
 
-                categoria.Activo = false; // Soft Delete
+                _context.Categorias_Productos.Remove(categoria);
                 await _context.SaveChangesAsync();
-
-                return Ok(new { mensaje = "Categoría eliminada lógicamente." });
+                return Ok(new { mensaje = "Categoría eliminada." });
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest(new { mensaje = "No se puede eliminar la categoría porque hay productos asignados a ella." });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error eliminando categoría.", error = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al eliminar.", error = ex.Message });
+            }
+        }
+
+        // ==========================================
+        // CATEGORÍAS DE SERVICIOS
+        // ==========================================
+
+        [HttpGet("servicios")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetCategoriasServicios()
+        {
+            try
+            {
+                var categorias = await _context.Categorias_Servicios.ToListAsync();
+                return Ok(categorias);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando categorías de servicios.", error = ex.Message });
+            }
+        }
+
+        [HttpPost("servicios")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> CrearCategoriaServicio([FromBody] Categoria_Servicio categoria)
+        {
+            if (categoria == null) return BadRequest();
+            try
+            {
+                _context.Categorias_Servicios.Add(categoria);
+                await _context.SaveChangesAsync();
+                return Ok(new { mensaje = "Categoría de servicio creada exitosamente.", categoria });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error creando categoría.", error = ex.Message });
+            }
+        }
+
+        [HttpPut("servicios/{id}")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> ActualizarCategoriaServicio(int id, [FromBody] Categoria_Servicio categoriaActualizada)
+        {
+            if (id != categoriaActualizada.IdCategoriaServicio) return BadRequest();
+            try
+            {
+                var categoria = await _context.Categorias_Servicios.FindAsync(id);
+                if (categoria == null) return NotFound();
+
+                categoria.Nombre = categoriaActualizada.Nombre;
+                categoria.Descripcion = categoriaActualizada.Descripcion;
+
+                await _context.SaveChangesAsync();
+                return Ok(new { mensaje = "Categoría de servicio actualizada.", categoria });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error actualizando categoría.", error = ex.Message });
+            }
+        }
+
+        [HttpDelete("servicios/{id}")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> EliminarCategoriaServicio(int id)
+        {
+            try
+            {
+                var categoria = await _context.Categorias_Servicios.FindAsync(id);
+                if (categoria == null) return NotFound();
+
+                _context.Categorias_Servicios.Remove(categoria);
+                await _context.SaveChangesAsync();
+                return Ok(new { mensaje = "Categoría eliminada." });
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest(new { mensaje = "No se puede eliminar la categoría porque hay servicios (tratamientos) asignados a ella." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al eliminar.", error = ex.Message });
             }
         }
     }

@@ -1,0 +1,85 @@
+2026-11-09 17:06:54.358 -03:00 [INF] Migraciones aplicadas exitosamente en la base de datos.
+2026-11-09 17:06:54.929 -03:00 [INF] Now listening on: https://localhost:7133
+2026-11-09 17:06:54.940 -03:00 [INF] Now listening on: http://localhost:5253
+2026-11-09 17:06:55.072 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-09 17:06:55.107 -03:00 [INF] Hosting environment: Development
+2026-11-09 17:06:55.132 -03:00 [INF] Content root path: C:\Users\Joaquin Seitz\Desktop\GitHub Repositorios\MOERBackend
+2026-11-09 17:24:21.925 -03:00 [INF] Migraciones aplicadas exitosamente en la base de datos.
+2026-11-09 17:24:22.344 -03:00 [INF] Now listening on: https://localhost:7133
+2026-11-09 17:24:22.348 -03:00 [INF] Now listening on: http://localhost:5253
+2026-11-09 17:24:22.464 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-09 17:24:22.466 -03:00 [INF] Hosting environment: Development
+2026-11-09 17:24:22.467 -03:00 [INF] Content root path: C:\Users\Joaquin Seitz\Desktop\GitHub Repositorios\MOERBackend
+2026-11-09 17:24:51.474 -03:00 [INF] HTTP GET /swagger respondió 301 en 7.8269 ms
+2026-11-09 17:24:51.640 -03:00 [INF] HTTP GET /swagger/index.html respondió 200 en 133.5711 ms
+2026-11-09 17:24:51.833 -03:00 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js respondió 200 en 185.4670 ms
+2026-11-09 17:24:51.833 -03:00 [INF] HTTP GET /swagger/swagger-ui.css respondió 200 en 185.4983 ms
+2026-11-09 17:24:51.936 -03:00 [INF] HTTP GET /swagger/swagger-ui-bundle.js respondió 200 en 289.0865 ms
+2026-11-09 17:24:52.482 -03:00 [INF] HTTP GET /swagger/v1/swagger.json respondió 200 en 72.4680 ms
+2026-11-09 17:25:58.794 -03:00 [INF] HTTP POST /api/Usuarios/login respondió 200 en 1052.5657 ms
+2026-11-09 17:26:21.480 -03:00 [INF] HTTP GET /api/Categorias/productos respondió 200 en 338.2288 ms
+2026-11-09 23:15:30.827 -03:00 [INF] Migraciones aplicadas exitosamente en la base de datos.
+2026-11-09 23:15:31.265 -03:00 [INF] Now listening on: https://localhost:7133
+2026-11-09 23:15:31.286 -03:00 [INF] Now listening on: http://localhost:5253
+2026-11-09 23:15:31.449 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-09 23:15:31.451 -03:00 [INF] Hosting environment: Development
+2026-11-09 23:15:31.452 -03:00 [INF] Content root path: C:\Users\Joaquin Seitz\Desktop\GitHub Repositorios\MOERBackend
+2026-11-09 23:15:35.753 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 15.1191 ms
+2026-11-09 23:15:36.770 -03:00 [INF] HTTP POST /api/usuarios/login respondió 401 en 973.3566 ms
+2026-11-09 23:15:49.701 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 1.5942 ms
+2026-11-09 23:15:49.884 -03:00 [INF] HTTP POST /api/usuarios/login respondió 401 en 169.5094 ms
+2026-11-09 23:17:23.550 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 0.1203 ms
+2026-11-09 23:17:23.876 -03:00 [INF] HTTP POST /api/usuarios/login respondió 200 en 289.3664 ms
+2026-11-09 23:29:53.527 -03:00 [INF] Migraciones aplicadas exitosamente en la base de datos.
+2026-11-09 23:29:54.176 -03:00 [INF] Now listening on: https://localhost:7133
+2026-11-09 23:29:54.305 -03:00 [INF] Now listening on: http://localhost:5253
+2026-11-09 23:29:54.430 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-09 23:29:54.436 -03:00 [INF] Hosting environment: Development
+2026-11-09 23:29:54.443 -03:00 [INF] Content root path: C:\Users\Joaquin Seitz\Desktop\GitHub Repositorios\MOERBackend
+2026-11-09 23:30:03.153 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 1363.4092 ms
+2026-11-09 23:46:57.494 -03:00 [INF] Migraciones aplicadas exitosamente en la base de datos.
+2026-11-09 23:46:57.941 -03:00 [INF] Now listening on: https://localhost:7133
+2026-11-09 23:46:57.946 -03:00 [INF] Now listening on: http://localhost:5253
+2026-11-09 23:46:58.036 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-09 23:46:58.038 -03:00 [INF] Hosting environment: Development
+2026-11-09 23:46:58.038 -03:00 [INF] Content root path: C:\Users\Joaquin Seitz\Desktop\GitHub Repositorios\MOERBackend
+2026-11-09 23:47:26.519 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 1207.0481 ms
+2026-11-09 23:47:38.463 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 201.9076 ms
+2026-11-09 23:47:55.259 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 2.7634 ms
+2026-11-09 23:47:55.546 -03:00 [INF] HTTP POST /api/usuarios/login respondió 401 en 277.6627 ms
+2026-11-09 23:48:10.974 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 14.4870 ms
+2026-11-09 23:48:24.703 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 0.1966 ms
+2026-11-09 23:48:24.940 -03:00 [INF] HTTP POST /api/usuarios/login respondió 200 en 231.0808 ms
+2026-11-09 23:50:18.712 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 0.4591 ms
+2026-11-09 23:50:18.789 -03:00 [INF] HTTP POST /api/usuarios/login respondió 200 en 69.0851 ms
+2026-11-09 23:50:24.695 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 401 en 24.5519 ms
+2026-11-09 23:50:39.050 -03:00 [INF] HTTP OPTIONS /api/turnos/mis-turnos respondió 204 en 0.1360 ms
+2026-11-09 23:50:39.250 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 193.7168 ms
+2026-11-09 23:50:41.467 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.1112 ms
+2026-11-09 23:50:41.486 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 11.0052 ms
+2026-11-09 23:51:34.556 -03:00 [INF] HTTP OPTIONS /api/turnos/mis-turnos respondió 204 en 0.3171 ms
+2026-11-09 23:51:34.578 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 16.4098 ms
+2026-11-09 23:51:37.258 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.1055 ms
+2026-11-09 23:51:37.274 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 11.4276 ms
+2026-11-09 23:52:51.801 -03:00 [INF] HTTP OPTIONS /api/turnos respondió 204 en 0.2410 ms
+2026-11-09 23:52:52.324 -03:00 [INF] HTTP POST /api/turnos respondió 200 en 516.6750 ms
+2026-11-09 23:52:52.472 -03:00 [INF] HTTP OPTIONS /api/turnos/mis-turnos respondió 204 en 0.2366 ms
+2026-11-09 23:52:52.543 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 62.7172 ms
+2026-11-09 23:53:00.187 -03:00 [INF] HTTP OPTIONS /api/turnos/2/cancelar respondió 204 en 0.2880 ms
+2026-11-09 23:53:00.271 -03:00 [INF] HTTP PATCH /api/turnos/2/cancelar respondió 200 en 73.8362 ms
+2026-11-09 23:53:00.299 -03:00 [INF] HTTP OPTIONS /api/turnos/mis-turnos respondió 204 en 0.1170 ms
+2026-11-09 23:53:00.326 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 18.9387 ms
+2026-11-09 23:53:11.827 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.2244 ms
+2026-11-09 23:53:12.031 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 185.2849 ms
+2026-11-09 23:53:22.150 -03:00 [INF] HTTP OPTIONS /api/turnos respondió 204 en 1.5903 ms
+2026-11-09 23:53:22.186 -03:00 [INF] HTTP POST /api/turnos respondió 200 en 29.7917 ms
+2026-11-09 23:53:22.277 -03:00 [INF] HTTP OPTIONS /api/turnos/mis-turnos respondió 204 en 0.1545 ms
+2026-11-09 23:53:22.295 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 12.5415 ms
+2026-11-09 23:53:24.409 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.0997 ms
+2026-11-09 23:53:24.438 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 23.3252 ms
+2026-11-09 23:53:37.569 -03:00 [INF] HTTP OPTIONS /api/turnos respondió 204 en 0.0923 ms
+2026-11-09 23:53:37.590 -03:00 [INF] HTTP POST /api/turnos respondió 400 en 16.2958 ms
+2026-11-09 23:54:01.589 -03:00 [INF] HTTP OPTIONS /api/turnos respondió 204 en 0.1045 ms
+2026-11-09 23:54:01.620 -03:00 [INF] HTTP POST /api/turnos respondió 200 en 26.3818 ms
+2026-11-09 23:54:01.707 -03:00 [INF] HTTP OPTIONS /api/turnos/mis-turnos respondió 204 en 0.0909 ms
+2026-11-09 23:54:01.757 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 42.6117 ms

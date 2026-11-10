@@ -1,25 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace tp5_Trani_Joaco_Alex.DTOs.Request
+namespace MoerEsteticaBackend.DTOs.Request
 {
     public class ProductoCreateDTO
     {
         [Required(ErrorMessage = "El nombre es obligatorio.")]
+        [MaxLength(255)]
         public string Nombre { get; set; } = string.Empty;
 
-        [Required]
+        [MaxLength(255)]
+        public string? Descripcion { get; set; }
+
+        [Required(ErrorMessage = "El precio es obligatorio.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor a 0.")]
         public decimal Precio { get; set; }
 
-        public int Stock { get; set; }
+        [Required(ErrorMessage = "El stock inicial es obligatorio.")]
+        [Range(0, int.MaxValue, ErrorMessage = "El stock no puede ser negativo.")]
+        public int StockActual { get; set; }
 
+        [MaxLength(255)]
         public string? Imagen { get; set; }
 
         [Required(ErrorMessage = "Debe seleccionar una categoría.")]
-        public int CategoriaId { get; set; }
-
-        // NUEVO CAMPO REQUERIDO
-        [Required(ErrorMessage = "Debe seleccionar un proveedor.")]
-        [Range(1, int.MaxValue, ErrorMessage = "Proveedor inválido.")]
-        public int ProveedorId { get; set; }
+        public int IdCategoriaProducto { get; set; }
     }
 }

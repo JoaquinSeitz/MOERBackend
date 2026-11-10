@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using tp5_Trani_Joaco_Alex.Data;
-using tp5_Trani_Joaco_Alex.Models;
-using tp5_Trani_Joaco_Alex.DTOs.Request;
-using tp5_Trani_Joaco_Alex.DTOs.Response;
+using MoerEstetica.API.Data;
+using MoerEsteticaBackend.DTOs.Request;
+using MoerEsteticaBackend.DTOs.Response;
+using MoerEsteticaBackend.Models;
 
-namespace tp5_Trani_Joaco_Alex.Controllers
+namespace MoerEsteticaBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = Roles.Admin)]
+    [Authorize(Roles = "Administrador")]
     public class IngresoProductosController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -25,24 +25,22 @@ namespace tp5_Trani_Joaco_Alex.Controllers
         {
             try
             {
-                var ingresos = await _context.IngresoProductos
-                    .Include(i => i.Proveedor)
+                var ingresos = await _context.Ingresos_Stock
                     .Include(i => i.Detalles)
                         .ThenInclude(d => d.Producto)
+                    .OrderByDescending(i => i.Fecha)
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize)
                     .Select(i => new IngresoProductoResponseDTO
                     {
-                        IngresoProductoId = i.IngresoProductoId,
+                        IdIngreso = i.IdIngreso,
                         Fecha = i.Fecha,
-                        ProveedorId = i.ProveedorId,
-                        ProveedorNombre = i.Proveedor != null ? i.Proveedor.RazonSocial : "Desconocido",
-                        UsuarioId = i.UsuarioId,
-                        Detalles = i.Detalles.Select(d => new DetalleMovimientoResponseDTO
+                        Detalles = i.Detalles.Select(d => new DetalleIngresoResponseDTO
                         {
-                            ProductoId = d.ProductoId,
+                            IdProducto = d.IdProducto,
                             ProductoNombre = d.Producto != null ? d.Producto.Nombre : "Desconocido",
-                            Cantidad = d.Cantidad
+                            Cantidad = d.Cantidad,
+                            PrecioCompraUnitario = d.PrecioCompraUnitario
                         }).ToList()
                     })
                     .ToListAsync();
@@ -60,26 +58,23 @@ namespace tp5_Trani_Joaco_Alex.Controllers
         {
             try
             {
-                var ingreso = await _context.IngresoProductos
-                    .Include(i => i.Proveedor)
+                var ingreso = await _context.Ingresos_Stock
                     .Include(i => i.Detalles)
                         .ThenInclude(d => d.Producto)
-                    .FirstOrDefaultAsync(i => i.IngresoProductoId == id);
+                    .FirstOrDefaultAsync(i => i.IdIngreso == id);
 
                 if (ingreso == null) return NotFound(new { mensaje = "Ingreso no encontrado." });
 
                 var response = new IngresoProductoResponseDTO
                 {
-                    IngresoProductoId = ingreso.IngresoProductoId,
+                    IdIngreso = ingreso.IdIngreso,
                     Fecha = ingreso.Fecha,
-                    ProveedorId = ingreso.ProveedorId,
-                    ProveedorNombre = ingreso.Proveedor != null ? ingreso.Proveedor.RazonSocial : "Desconocido",
-                    UsuarioId = ingreso.UsuarioId,
-                    Detalles = ingreso.Detalles.Select(d => new DetalleMovimientoResponseDTO
+                    Detalles = ingreso.Detalles.Select(d => new DetalleIngresoResponseDTO
                     {
-                        ProductoId = d.ProductoId,
+                        IdProducto = d.IdProducto,
                         ProductoNombre = d.Producto != null ? d.Producto.Nombre : "Desconocido",
-                        Cantidad = d.Cantidad
+                        Cantidad = d.Cantidad,
+                        PrecioCompraUnitario = d.PrecioCompraUnitario
                     }).ToList()
                 };
 
@@ -99,76 +94,48 @@ namespace tp5_Trani_Joaco_Alex.Controllers
                 return BadRequest(new { mensaje = "El ingreso debe contener al menos un producto en el detalle." });
             }
 
+            // Usamos una transacción para asegurar que el stock y el historial se guarden juntos o fallen juntos
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
-                var nuevoIngreso = new IngresoProductos
+                var nuevoIngreso = new Ingreso_Stock
                 {
-                    ProveedorId = dto.ProveedorId,
-                    UsuarioId = dto.UsuarioId,
                     Fecha = DateTime.Now,
-                    Detalles = new List<DetalleIngresoProductos>()
+                    Detalles = new List<Detalle_Ingreso>()
                 };
 
                 foreach (var item in dto.Detalles)
                 {
-                    if (item.Cantidad <= 0)
-                        return BadRequest(new { mensaje = $"La cantidad para el producto ID {item.ProductoId} debe ser mayor a 0." });
+                    var producto = await _context.Productos.FindAsync(item.IdProducto);
+                    if (producto == null || !producto.Activo)
+                        return NotFound(new { mensaje = $"Producto con ID {item.IdProducto} no encontrado o inactivo." });
 
-                    var producto = await _context.Productos.FindAsync(item.ProductoId);
-                    if (producto == null)
-                        return NotFound(new { mensaje = $"Producto con ID {item.ProductoId} no encontrado." });
+                    // Aumentamos el stock actual del producto en el catálogo
+                    producto.StockActual += item.Cantidad;
 
-                    // Sumamos el stock al producto
-                    producto.Stock += item.Cantidad;
-
-                    nuevoIngreso.Detalles.Add(new DetalleIngresoProductos
+                    // Agregamos el detalle al historial de ingresos
+                    nuevoIngreso.Detalles.Add(new Detalle_Ingreso
                     {
-                        ProductoId = item.ProductoId,
-                        Cantidad = item.Cantidad
+                        IdProducto = item.IdProducto,
+                        Cantidad = item.Cantidad,
+                        PrecioCompraUnitario = item.PrecioCompraUnitario
                     });
                 }
 
-                _context.IngresoProductos.Add(nuevoIngreso);
-                await _context.SaveChangesAsync(); // Guarda cabecera, detalles y actualiza stock en una sola transacción
+                _context.Ingresos_Stock.Add(nuevoIngreso);
 
-                return Ok(new { mensaje = "Ingreso registrado exitosamente.", IngresoId = nuevoIngreso.IngresoProductoId });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error registrando el ingreso.", error = ex.Message });
-            }
-        }
-
-        [HttpDelete("{id}")]
-        [Authorize(Roles = Roles.Admin)] // Solo el Admin puede anular un ingreso
-        public async Task<IActionResult> EliminarIngreso(int id)
-        {
-            try
-            {
-                var ingreso = await _context.IngresoProductos
-                    .Include(i => i.Detalles)
-                    .FirstOrDefaultAsync(i => i.IngresoProductoId == id);
-
-                if (ingreso == null) return NotFound(new { mensaje = "Ingreso no encontrado para eliminar." });
-
-                // Revertimos el stock de los productos involucrados antes de borrar el registro
-                foreach (var detalle in ingreso.Detalles)
-                {
-                    var producto = await _context.Productos.FindAsync(detalle.ProductoId);
-                    if (producto != null)
-                    {
-                        producto.Stock -= detalle.Cantidad;
-                    }
-                }
-
-                _context.IngresoProductos.Remove(ingreso);
+                // SaveChangesAsync guarda el ingreso, sus detalles, y los updates a la tabla Producto simultáneamente
                 await _context.SaveChangesAsync();
 
-                return Ok(new { mensaje = "Ingreso eliminado y stock revertido exitosamente." });
+                await transaction.CommitAsync();
+
+                return Ok(new { mensaje = "Ingreso registrado y stock actualizado exitosamente.", IdIngreso = nuevoIngreso.IdIngreso });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error eliminando el ingreso.", error = ex.Message });
+                await transaction.RollbackAsync();
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error registrando el ingreso de stock.", error = ex.Message });
             }
         }
     }

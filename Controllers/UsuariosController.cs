@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MoerEstetica.API.Data;
+using MoerEsteticaBackend.DTOs.Request;
+using MoerEsteticaBackend.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using tp5_Trani_Joaco_Alex.Data;
-using tp5_Trani_Joaco_Alex.DTOs.Request;
-using tp5_Trani_Joaco_Alex.DTOs.Response;
-using tp5_Trani_Joaco_Alex.Models;
 
-namespace tp5_Trani_Joaco_Alex.Controllers
+namespace MoerEsteticaBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -25,21 +25,21 @@ namespace tp5_Trani_Joaco_Alex.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.Admin)] // Solo el Admin puede listar los usuarios
-        public IActionResult ObtenerUsuarios()
+        [Authorize(Roles = "Administrador")] // Asegurate de que el nombre del rol coincida con tu tabla Rol
+        public async Task<IActionResult> ObtenerUsuarios()
         {
             try
             {
-                var usuarios = _context.Usuarios
-                    .Where(u => u.Activo == true)
-                    .Select(u => new UsuarioResponseDTO
+                // Usamos un tipo anónimo en lugar de UsuarioResponseDTO por ahora para simplificar
+                var usuarios = await _context.Usuarios
+                    .Include(u => u.Rol)
+                    .Select(u => new
                     {
-                        UsuarioId = u.UsuarioId,
-                        Nombre = u.Nombre,
-                        Email = u.Email,
-                        Rol = u.Rol
+                        u.IdUsuario,
+                        u.Email,
+                        Rol = u.Rol != null ? u.Rol.Nombre : "Sin Rol"
                     })
-                    .ToList();
+                    .ToListAsync();
 
                 return Ok(usuarios);
             }
@@ -51,47 +51,45 @@ namespace tp5_Trani_Joaco_Alex.Controllers
 
         [HttpPost("registro")]
         [AllowAnonymous]
-        public IActionResult Registrar([FromBody] RegistroUsuarioDTO dto)
+        public async Task<IActionResult> Registrar([FromBody] RegistroUsuarioDTO dto)
         {
-            if (dto == null || string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Password))
+            if (dto == null || string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Contrasenia))
                 return BadRequest(new { mensaje = "Datos de registro incompletos." });
 
             try
             {
-                if (_context.Usuarios.Any(u => u.Email == dto.Email))
+                if (await _context.Usuarios.AnyAsync(u => u.Email == dto.Email))
                     return BadRequest(new { mensaje = "El email ya está registrado." });
 
-                // Validamos que el rol sea uno de los permitidos (Admin, Operador o Cliente)
-                var rolAsignado = (dto.Rol == Roles.Admin || dto.Rol == Roles.Operador)
-                    ? dto.Rol
-                    : "Cliente";
+                // 1. Asignamos por defecto el rol "Cliente". Debe existir previamente en la tabla Rol (Id = 2 por ej.)
+                var rolCliente = await _context.Roles.FirstOrDefaultAsync(r => r.Nombre == "Cliente");
+                if (rolCliente == null)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "El rol 'Cliente' no existe en la BD. Ejecuta el Seeding." });
 
-                var nuevoUsuario = new Usuarios
+                // 2. Alta de Usuario (Credenciales)
+                var nuevoUsuario = new Usuario
                 {
-                    Nombre = dto.Nombre,
                     Email = dto.Email,
-                    Password = dto.Password,
-                    Rol = rolAsignado,
-                    Activo = true
+                    Contrasenia = dto.Contrasenia,
+                    IdRol = rolCliente.IdRol
                 };
 
                 _context.Usuarios.Add(nuevoUsuario);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync(); // Se genera el IdUsuario
 
-                // Si se registra como Cliente (App Móvil), también lo damos de alta en la tabla Clientes
-                if (rolAsignado == "Cliente" && !_context.Clientes.Any(c => c.Email == dto.Email))
+                // 3. Alta de Cliente (Datos Personales)
+                var nuevoCliente = new Cliente
                 {
-                    _context.Clientes.Add(new Clientes
-                    {
-                        Nombre = dto.Nombre,
-                        Email = dto.Email,
-                        Telefono = "Sin especificar",
-                        Activo = true
-                    });
-                    _context.SaveChanges();
-                }
+                    Nombre = dto.Nombre,
+                    Apellido = dto.Apellido,
+                    Telefono = dto.Telefono,
+                    IdUsuario = nuevoUsuario.IdUsuario
+                };
 
-                return Ok(new { mensaje = "Usuario registrado exitosamente.", UsuarioId = nuevoUsuario.UsuarioId, Rol = nuevoUsuario.Rol });
+                _context.Clientes.Add(nuevoCliente);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { mensaje = "Usuario registrado exitosamente.", idUsuario = nuevoUsuario.IdUsuario, idCliente = nuevoCliente.IdCliente });
             }
             catch (Exception ex)
             {
@@ -101,7 +99,7 @@ namespace tp5_Trani_Joaco_Alex.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] LoginDTO login)
+        public async Task<IActionResult> Login([FromBody] LoginDTO login)
         {
             if (!ModelState.IsValid)
             {
@@ -111,31 +109,30 @@ namespace tp5_Trani_Joaco_Alex.Controllers
 
             try
             {
-                // Buscamos al usuario solo por email primero para dar un mensaje específico
-                var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == login.Email);
+                var usuario = await _context.Usuarios
+                    .Include(u => u.Rol)
+                    .FirstOrDefaultAsync(u => u.Email == login.Email);
 
-                if (usuario == null)
+                if (usuario == null || usuario.Contrasenia != login.Contrasenia)
                 {
-                    return Unauthorized(new { mensaje = "El correo electrónico o la contraseña son incorrectos" });
+                    return Unauthorized(new { mensaje = "El correo electrónico o la contraseña son incorrectos." });
                 }
 
-                if (usuario.Password != login.Password)
-                {
-                    return Unauthorized(new { mensaje = "El correo electrónico o la contraseña son incorrectos" });
-                }
+                // Buscamos el Cliente asociado para enviarle el IdCliente al frontend
+                var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.IdUsuario == usuario.IdUsuario);
 
-                if (!usuario.Activo)
+                var claims = new List<Claim>
                 {
-                    return Unauthorized(new { mensaje = "Su cuenta de usuario se encuentra deshabilitada." });
-                }
-
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, usuario.UsuarioId.ToString()),
-                    new Claim(ClaimTypes.Name, usuario.Nombre),
+                    new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString()),
                     new Claim(ClaimTypes.Email, usuario.Email),
-                    new Claim(ClaimTypes.Role, usuario.Rol)
+                    new Claim(ClaimTypes.Role, usuario.Rol?.Nombre ?? "Cliente")
                 };
+
+                if (cliente != null)
+                {
+                    claims.Add(new Claim("IdCliente", cliente.IdCliente.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Name, $"{cliente.Nombre} {cliente.Apellido}"));
+                }
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -153,10 +150,10 @@ namespace tp5_Trani_Joaco_Alex.Controllers
                 return Ok(new
                 {
                     token = tokenString,
-                    usuarioId = usuario.UsuarioId,
-                    nombre = usuario.Nombre,
+                    idUsuario = usuario.IdUsuario,
+                    idCliente = cliente?.IdCliente,
                     email = usuario.Email,
-                    rol = usuario.Rol
+                    rol = usuario.Rol?.Nombre
                 });
             }
             catch (Exception ex)

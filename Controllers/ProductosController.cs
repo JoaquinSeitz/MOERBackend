@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using tp5_Trani_Joaco_Alex.Data;
-using tp5_Trani_Joaco_Alex.DTOs.Request;
-using tp5_Trani_Joaco_Alex.DTOs.Response;
-using tp5_Trani_Joaco_Alex.Models;
+using MoerEstetica.API.Data;
+using MoerEsteticaBackend.DTOs.Request;
+using MoerEsteticaBackend.DTOs.Response;
+using MoerEsteticaBackend.Models;
 
-namespace tp5_Trani_Joaco_Alex.Controllers
+namespace MoerEsteticaBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,7 +20,28 @@ namespace tp5_Trani_Joaco_Alex.Controllers
             _context = context;
             _env = env;
         }
+        [HttpGet("admin")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> GetTodosLosProductosAdmin()
+        {
+            var productos = await _context.Productos
+                 .Include(p => p.Categoria_Producto)
+                 .Select(p => new ProductoResponseDTO
+                 {
+                     IdProducto = p.IdProducto,
+                     Nombre = p.Nombre,
+                     Descripcion = p.Descripcion,
+                     Precio = p.Precio,
+                     StockActual = p.StockActual,
+                     Imagen = p.Imagen,
+                     Activo = p.Activo, // Exponemos el estado
+                     IdCategoriaProducto = p.IdCategoriaProducto,
+                     CategoriaNombre = p.Categoria_Producto != null ? p.Categoria_Producto.Nombre : "Sin Categoría"
+                 })
+                 .ToListAsync();
 
+            return Ok(productos);
+        }
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> GetProductos([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
@@ -28,19 +49,20 @@ namespace tp5_Trani_Joaco_Alex.Controllers
             try
             {
                 var productos = await _context.Productos
-                     .Include(p => p.Categoria)
+                     .Include(p => p.Categoria_Producto)
                      .Where(p => p.Activo)
-                     .Skip((pageNumber - 1) * pageSize) // Corregido el error de sintaxis acá
+                     .Skip((pageNumber - 1) * pageSize)
                      .Take(pageSize)
                      .Select(p => new ProductoResponseDTO
                      {
-                         ProductoId = p.ProductoId,
+                         IdProducto = p.IdProducto,
                          Nombre = p.Nombre,
+                         Descripcion = p.Descripcion,
                          Precio = p.Precio,
-                         Stock = p.Stock,
+                         StockActual = p.StockActual,
                          Imagen = p.Imagen,
-                         CategoriaId = p.CategoriaId,
-                         CategoriaNombre = p.Categoria != null ? p.Categoria.Nombre : "Sin Categoría"
+                         IdCategoriaProducto = p.IdCategoriaProducto,
+                         CategoriaNombre = p.Categoria_Producto != null ? p.Categoria_Producto.Nombre : "Sin Categoría"
                      })
                      .ToListAsync();
 
@@ -48,7 +70,7 @@ namespace tp5_Trani_Joaco_Alex.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando el listado de productos.", error = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando el catálogo de productos.", error = ex.Message });
             }
         }
 
@@ -59,17 +81,18 @@ namespace tp5_Trani_Joaco_Alex.Controllers
             try
             {
                 var producto = await _context.Productos
-                    .Include(p => p.Categoria)
-                    .Where(p => p.ProductoId == id && p.Activo)
+                    .Include(p => p.Categoria_Producto)
+                    .Where(p => p.IdProducto == id && p.Activo)
                     .Select(p => new ProductoResponseDTO
                     {
-                        ProductoId = p.ProductoId,
+                        IdProducto = p.IdProducto,
                         Nombre = p.Nombre,
+                        Descripcion = p.Descripcion,
                         Precio = p.Precio,
-                        Stock = p.Stock,
+                        StockActual = p.StockActual,
                         Imagen = p.Imagen,
-                        CategoriaId = p.CategoriaId,
-                        CategoriaNombre = p.Categoria != null ? p.Categoria.Nombre : "Sin Categoría"
+                        IdCategoriaProducto = p.IdCategoriaProducto,
+                        CategoriaNombre = p.Categoria_Producto != null ? p.Categoria_Producto.Nombre : "Sin Categoría"
                     })
                     .FirstOrDefaultAsync();
 
@@ -85,66 +108,37 @@ namespace tp5_Trani_Joaco_Alex.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> CrearProducto([FromBody] ProductoCreateDTO dto)
         {
             if (dto == null) return BadRequest(new { mensaje = "Los datos del producto son nulos." });
 
-            // Iniciamos una transacción para garantizar que Producto e Ingreso se guarden juntos
-            using var transaction = await _context.Database.BeginTransactionAsync();
-
             try
             {
-                var nuevoProducto = new Productos
+                var nuevoProducto = new Producto
                 {
                     Nombre = dto.Nombre,
+                    Descripcion = dto.Descripcion,
                     Precio = dto.Precio,
-                    Stock = dto.Stock,
+                    StockActual = dto.StockActual, // Nace con el stock indicado
                     Imagen = dto.Imagen,
-                    CategoriaId = dto.CategoriaId,
+                    IdCategoriaProducto = dto.IdCategoriaProducto,
                     Activo = true
                 };
 
                 _context.Productos.Add(nuevoProducto);
                 await _context.SaveChangesAsync();
 
-                // Si se crea con stock inicial > 0, registramos el movimiento en el historial real
-                if (dto.Stock > 0)
-                {
-                    var ingresoInicial = new IngresoProductos
-                    {
-                        ProveedorId = dto.ProveedorId,
-                        UsuarioId = 1,   // (Idealmente se saca del token JWT)
-                        Fecha = DateTime.Now,
-                        Detalles = new List<DetalleIngresoProductos>
-                        {
-                            new DetalleIngresoProductos
-                            {
-                                ProductoId = nuevoProducto.ProductoId,
-                                Cantidad = dto.Stock
-                            }
-                        }
-                    };
-
-                    // ESTAS DOS LÍNEAS DEBEN ESTAR ADENTRO DEL IF
-                    _context.IngresoProductos.Add(ingresoInicial);
-                    await _context.SaveChangesAsync();
-                }
-
-                // Confirmamos la transacción
-                await transaction.CommitAsync();
-
-                return Ok(new { mensaje = "Producto creado exitosamente e historial actualizado.", ProductoId = nuevoProducto.ProductoId });
+                return Ok(new { mensaje = "Producto creado exitosamente.", IdProducto = nuevoProducto.IdProducto });
             }
             catch (Exception ex)
             {
-                await transaction.RollbackAsync();
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al crear el producto.", error = ex.InnerException?.Message ?? ex.Message });
             }
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> ActualizarProducto(int id, [FromBody] ProductoCreateDTO dto)
         {
             if (dto == null) return BadRequest(new { mensaje = "Los datos del producto son nulos." });
@@ -157,13 +151,10 @@ namespace tp5_Trani_Joaco_Alex.Controllers
                     return NotFound(new { mensaje = "Producto no encontrado o inactivo." });
 
                 productoExistente.Nombre = dto.Nombre;
+                productoExistente.Descripcion = dto.Descripcion;
                 productoExistente.Precio = dto.Precio;
-
-                // Nota: El stock no debería modificarse desde un PUT, solo mediante ingresos/egresos, 
-                // pero lo mantenemos si lo requieren las reglas de tu sistema.
-                productoExistente.Stock = dto.Stock;
-                productoExistente.Imagen = dto.Imagen;
-                productoExistente.CategoriaId = dto.CategoriaId;
+                productoExistente.IdCategoriaProducto = dto.IdCategoriaProducto;
+                // El stock y la imagen no se actualizan mediante este DTO por regla de negocio
 
                 await _context.SaveChangesAsync();
 
@@ -175,29 +166,30 @@ namespace tp5_Trani_Joaco_Alex.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        [Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> EliminarProducto(int id)
+        [HttpPatch("{id}/estado")]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> CambiarEstadoProducto(int id)
         {
             try
             {
                 var producto = await _context.Productos.FindAsync(id);
                 if (producto == null) return NotFound(new { mensaje = "Producto no encontrado." });
 
-                producto.Activo = false;
+                producto.Activo = !producto.Activo; // Toggle: si estaba activo lo desactiva, y viceversa
                 await _context.SaveChangesAsync();
 
-                return Ok(new { mensaje = "Producto eliminado lógicamente." });
+                string estadoTexto = producto.Activo ? "reactivado" : "dado de baja lógicamente";
+                return Ok(new { mensaje = $"Producto {estadoTexto}." });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al eliminar el producto.", error = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al cambiar el estado del producto.", error = ex.Message });
             }
         }
 
-        // --- ENDPOINT PROFESIONAL PARA BLAZOR Y MAUI (MULTIPART/FORM-DATA) ---
+        // Endpoint multipart/form-data para subir imágenes físicas
         [HttpPost("{id}/imagen")]
-        [Authorize(Roles = "Admin,Operador")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> SubirImagenReal(int id, IFormFile archivo)
         {
             try
@@ -250,126 +242,5 @@ namespace tp5_Trani_Joaco_Alex.Controllers
                 });
             }
         }
-
-        // ==============================================================
-        // NUEVOS ENDPOINTS PARA MANTENIMIENTO WEB (SOLO ADMIN)
-        // ==============================================================
-
-        [HttpGet("inactivos")]
-        [Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> GetProductosInactivos()
-        {
-            try
-            {
-                var productos = await _context.Productos
-                     .Include(p => p.Categoria)
-                     .Where(p => !p.Activo)
-                     .OrderBy(p => p.Nombre)
-                     .Select(p => new ProductoResponseDTO
-                     {
-                         ProductoId = p.ProductoId,
-                         Nombre = p.Nombre,
-                         Precio = p.Precio,
-                         Stock = p.Stock,
-                         Imagen = p.Imagen,
-                         CategoriaId = p.CategoriaId,
-                         CategoriaNombre = p.Categoria != null ? p.Categoria.Nombre : "Sin Categoría"
-                     })
-                     .ToListAsync();
-
-                return Ok(productos);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando inactivos.", error = ex.Message });
-            }
-        }
-
-        [HttpPut("reactivar/{id}")]
-        [Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> ReactivarProducto(int id)
-        {
-            try
-            {
-                var producto = await _context.Productos.FindAsync(id);
-                if (producto == null) return NotFound(new { mensaje = "Producto no encontrado." });
-
-                producto.Activo = true;
-                await _context.SaveChangesAsync();
-
-                return Ok(new { mensaje = "Producto dado de alta nuevamente." });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al reactivar.", error = ex.Message });
-            }
-        }
-
-        [HttpPut("actualizar-stock/{id}")]
-        [Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> ActualizarStockManual(int id, [FromBody] NuevoStockDTO dto)
-        {
-            if (dto == null || dto.NuevoStock < 0)
-                return BadRequest(new { mensaje = "Stock inválido." });
-
-            try
-            {
-                var producto = await _context.Productos.FindAsync(id);
-                if (producto == null || !producto.Activo)
-                    return NotFound(new { mensaje = "Producto no encontrado o inactivo." });
-
-                producto.Stock = dto.NuevoStock;
-                await _context.SaveChangesAsync();
-
-                return Ok(new { mensaje = "Stock actualizado correctamente." });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al modificar stock.", error = ex.Message });
-            }
-        }
-        [HttpPut("actualizar-precio/{id}")]
-        [Authorize(Roles = Roles.Admin)]
-        public async Task<IActionResult> ActualizarPrecioManual(int id, [FromBody] NuevoPrecioDTO dto)
-        {
-            if (dto == null || dto.NuevoPrecio <= 0)
-                return BadRequest(new { mensaje = "Precio inválido. Debe ser mayor a 0." });
-
-            try
-            {
-                var producto = await _context.Productos.FindAsync(id);
-                if (producto == null || !producto.Activo)
-                    return NotFound(new { mensaje = "Producto no encontrado o inactivo." });
-
-                producto.Precio = dto.NuevoPrecio;
-                await _context.SaveChangesAsync();
-
-                return Ok(new { mensaje = "Precio actualizado correctamente." });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al modificar precio.", error = ex.Message });
-            }
-        }
-    
-
-    // DTO simple auxiliar para recibir el nuevo stock en el JSON (Ya lo tienes)
-    public class NuevoStockDTO
-    {
-        public int NuevoStock { get; set; }
-    }
-
-    // NUEVO DTO auxiliar para recibir el nuevo precio
-    public class NuevoPrecioDTO
-    {
-        public decimal NuevoPrecio { get; set; }
-    }
-
-}
-
-    // DTO simple auxiliar para recibir el nuevo stock en el JSON
-    public class NuevoStockDTO
-    {
-        public int NuevoStock { get; set; }
     }
 }

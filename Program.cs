@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuestPDF.Infrastructure;
 using System.Text;
-using tp5_Trani_Joaco_Alex.Data;
+using MoerEstetica.API.Data; // Ajustado al namespace actual de tu ApplicationDbContext
 using Serilog;
 
 // 1. Inicialización temprana del registrador de arranque (Bootstrap Logger)
@@ -14,15 +14,8 @@ Log.Logger = new LoggerConfiguration()
 
 try
 {
-    Log.Information("Iniciando aplicación Web API TP5...");
+    Log.Information("Iniciando aplicación Web API MOER Estética...");
     var builder = WebApplication.CreateBuilder(args);
-
-    // COMENTADO: Kestrel choca con el In-Process de IIS en MonsterASP y bota la conexión.
-    // (El límite de subida de 50MB lo configuraremos luego en el web.config si es necesario)
-    // builder.WebHost.ConfigureKestrel(options =>
-    // {
-    //     options.Limits.MaxRequestBodySize = 52428800;
-    // });
 
     QuestPDF.Settings.License = LicenseType.Community;
 
@@ -33,7 +26,9 @@ try
         .Enrich.FromLogContext());
 
     builder.Services.AddControllers();
-    builder.Services.AddScoped<tp5_Trani_Joaco_Alex.Services.IEmailService, tp5_Trani_Joaco_Alex.Services.EmailService>();
+
+    // COMENTADO TEMPORALMENTE HASTA QUE SE ADAPTE EL EMAILSERVICE
+    // builder.Services.AddScoped<MoerEsteticaBackend.Services.IEmailService, MoerEsteticaBackend.Services.EmailService>();
 
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -87,7 +82,7 @@ try
     // 3. Configuración de Swagger con soporte para Token JWT (Botón Authorize)
     builder.Services.AddSwaggerGen(c =>
     {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Trabajo Práctico N° 5 - Servicios API REST", Version = "v1" });
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "API REST - MOER Estética", Version = "v1" });
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             Name = "Authorization",
@@ -120,12 +115,8 @@ try
         options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} respondió {StatusCode} en {Elapsed:0.0000} ms";
     });
 
-    // Habilitamos Swagger tanto en local como en producción (MonsterASP)
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    // COMENTADO: MonsterASP ya maneja el HTTPS. Forzarlo aquí causa un ERR_CONNECTION_RESET.
-    // app.UseHttpsRedirection(); 
 
     app.UseStaticFiles();
 
@@ -134,6 +125,7 @@ try
     app.UseAuthorization();
     app.MapControllers();
 
+    // APLICACIÓN AUTOMÁTICA DE MIGRACIONES EN EL ARRANQUE
     using (var scope = app.Services.CreateScope())
     {
         try

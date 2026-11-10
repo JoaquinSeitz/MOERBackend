@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace tp5_Trani_Joaco_Alex.DTOs.Response
+﻿namespace MoerEsteticaBackend.DTOs.Response
 {
     public class IngresoProductoResponseDTO
     {
-        public int IngresoProductoId { get; set; }
+        public int IdIngreso { get; set; }
         public DateTime Fecha { get; set; }
-        public int ProveedorId { get; set; }
-        public string ProveedorNombre { get; set; } = string.Empty;
-        public int UsuarioId { get; set; }
-        public List<DetalleMovimientoResponseDTO> Detalles { get; set; } = new List<DetalleMovimientoResponseDTO>();
+        public List<DetalleIngresoResponseDTO> Detalles { get; set; } = new List<DetalleIngresoResponseDTO>();
+    }
+
+    public class DetalleIngresoResponseDTO
+    {
+        public int IdProducto { get; set; }
+        public string ProductoNombre { get; set; } = string.Empty;
+        public int Cantidad { get; set; }
+        public decimal PrecioCompraUnitario { get; set; }
     }
 }

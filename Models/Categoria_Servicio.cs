@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace tp5_Trani_Joaco_Alex.Models
+namespace MoerEsteticaBackend.Models
 {
-    public class Categoria
+    public class Categoria_Servicio
     {
         [Key]
-        public int CategoriaId { get; set; }
+        public int IdCategoriaServicio { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -13,7 +13,5 @@ namespace tp5_Trani_Joaco_Alex.Models
 
         [MaxLength(255)]
         public string? Descripcion { get; set; }
-
-        public bool Activo { get; set; } = true;
     }
 }

@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using tp5_Trani_Joaco_Alex.Data;
-using tp5_Trani_Joaco_Alex.Models;
+using Microsoft.EntityFrameworkCore;
+using MoerEstetica.API.Data;
+using MoerEsteticaBackend.Models;
+using System.Security.Claims;
 
-namespace tp5_Trani_Joaco_Alex.Controllers
+namespace MoerEsteticaBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // Esto bloquea todo el controlador.
+    [Authorize]
     public class ClientesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -17,130 +19,90 @@ namespace tp5_Trani_Joaco_Alex.Controllers
             _context = context;
         }
 
-        // GET: api/Clientes?pagina=1&cantidad=10 (Listado con Paginado)
+        // GET: api/Clientes (Listado para el Dashboard del Administrador)
         [HttpGet]
-        public IActionResult GetClientes([FromQuery] int pagina = 1, [FromQuery] int cantidad = 10)
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> GetClientes()
         {
             try
             {
-                // Solo traemos los clientes activos
-                var query = _context.Clientes.Where(c => c.Activo == true);
+                var clientes = await _context.Clientes
+                    .Select(c => new
+                    {
+                        c.IdCliente,
+                        c.Nombre,
+                        c.Apellido,
+                        c.Telefono,
+                        Email = c.Usuario != null ? c.Usuario.Email : "Sin Email"
+                    })
+                    .ToListAsync();
 
-                var totalRegistros = query.Count();
-
-                // Lógica matemática del paginado
-                var clientes = query
-                    .Skip((pagina - 1) * cantidad)
-                    .Take(cantidad)
-                    .ToList();
-
-                return Ok(new
-                {
-                    totalRegistros,
-                    paginaActual = pagina,
-                    registrosPorPagina = cantidad,
-                    datos = clientes
-                });
+                return Ok(clientes);
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando el listado de clientes.", error = ex.Message });
             }
         }
-        // GET: api/Clientes/lista (Lista plana exclusiva para el desplegable del frontend)
-        [HttpGet("lista")]
-        public IActionResult ObtenerClientesLista()
+
+        // GET: api/Clientes/mi-perfil (El cliente consulta sus propios datos)
+        [HttpGet("mi-perfil")]
+        public async Task<IActionResult> MiPerfil()
         {
             try
             {
-                var clientes = _context.Clientes
-                    .Where(c => c.Activo == true)
-                    .Select(c => new { c.ClienteId, c.Nombre }) // Solo traemos lo necesario
-                    .ToList();
+                var idClienteClaim = User.Claims.FirstOrDefault(c => c.Type == "IdCliente")?.Value;
+                if (string.IsNullOrEmpty(idClienteClaim))
+                    return Unauthorized(new { mensaje = "No se pudo identificar el cliente actual." });
 
-                return Ok(clientes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando la lista.", error = ex.Message });
-            }
-        }
-        // POST: api/Clientes (Alta)
-        [HttpPost]
-        public IActionResult CrearCliente([FromBody] Clientes cliente)
-        {
-            if (cliente == null) return BadRequest(new { mensaje = "El cliente proporcionado es nulo." });
+                int idCliente = int.Parse(idClienteClaim);
 
-            try
-            {
-                cliente.Activo = true; // Forzamos que nazca activo
-                _context.Clientes.Add(cliente);
-                _context.SaveChanges();
+                var cliente = await _context.Clientes
+                    .Include(c => c.Usuario)
+                    .FirstOrDefaultAsync(c => c.IdCliente == idCliente);
 
-                return Ok(new { mensaje = "Cliente creado con éxito.", cliente });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al crear el cliente.", error = ex.Message });
-            }
-        }
+                if (cliente == null) return NotFound(new { mensaje = "Cliente no encontrado." });
 
-        // PUT: api/Clientes/5 (Modificación)
-        [HttpPut("{id}")]
-        public IActionResult ModificarCliente(int id, [FromBody] Clientes clienteActualizado)
-        {
-            // 1. LA NUEVA BARRERA: Validamos que los IDs coincidan antes de tocar la base de datos
-            if (clienteActualizado == null || id != clienteActualizado.ClienteId)
-            {
-                return BadRequest(new { mensaje = "Datos inválidos o el ID de la URL no coincide con el del cuerpo." });
-            }
-
-            try
-            {
-                var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteId == id && c.Activo == true);
-
-                if (cliente == null)
+                return Ok(new
                 {
-                    return NotFound(new { mensaje = "Cliente no encontrado o inactivo." });
-                }
+                    cliente.IdCliente,
+                    cliente.Nombre,
+                    cliente.Apellido,
+                    cliente.Telefono,
+                    Email = cliente.Usuario?.Email
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error recuperando tu perfil.", error = ex.Message });
+            }
+        }
 
-                // Actualizamos los datos
+        // PUT: api/Clientes (El cliente modifica sus propios datos)
+        [HttpPut]
+        public async Task<IActionResult> ModificarMiPerfil([FromBody] Cliente clienteActualizado)
+        {
+            try
+            {
+                var idClienteClaim = User.Claims.FirstOrDefault(c => c.Type == "IdCliente")?.Value;
+                if (string.IsNullOrEmpty(idClienteClaim))
+                    return Unauthorized(new { mensaje = "No se pudo identificar el cliente actual." });
+
+                int idCliente = int.Parse(idClienteClaim);
+
+                var cliente = await _context.Clientes.FirstOrDefaultAsync(c => c.IdCliente == idCliente);
+                if (cliente == null) return NotFound(new { mensaje = "Cliente no encontrado." });
+
                 cliente.Nombre = clienteActualizado.Nombre;
+                cliente.Apellido = clienteActualizado.Apellido;
                 cliente.Telefono = clienteActualizado.Telefono;
-                cliente.Email = clienteActualizado.Email;
 
-                _context.SaveChanges();
-
-                return Ok(new { mensaje = "Cliente actualizado correctamente.", cliente });
+                await _context.SaveChangesAsync();
+                return Ok(new { mensaje = "Perfil actualizado correctamente." });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al modificar el cliente.", error = ex.Message });
-            }
-        }
-
-        // DELETE: api/Clientes/5 (Baja Lógica / Soft Delete)
-        [HttpDelete("{id}")]
-        public IActionResult EliminarCliente(int id)
-        {
-            try
-            {
-                var cliente = _context.Clientes.FirstOrDefault(c => c.ClienteId == id);
-
-                if (cliente == null)
-                {
-                    return NotFound(new { mensaje = "Cliente no encontrado." });
-                }
-
-                // Soft Delete: En vez de usar _context.Clientes.Remove(cliente), le cambiamos el estado
-                cliente.Activo = false;
-                _context.SaveChanges();
-
-                return Ok(new { mensaje = "Cliente eliminado lógicamente (Soft Delete)." });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al eliminar el cliente.", error = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error al modificar el perfil.", error = ex.Message });
             }
         }
     }

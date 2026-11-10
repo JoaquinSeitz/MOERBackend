@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using tp5_Trani_Joaco_Alex.Data;
+using MoerEstetica.API.Data;
 
 #nullable disable
 
@@ -22,16 +22,13 @@ namespace tp5_Trani_Joaco_Alex.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.Categoria", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Categoria_Producto", b =>
                 {
-                    b.Property<int>("CategoriaId")
+                    b.Property<int>("IdCategoriaProducto")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoriaId"));
-
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCategoriaProducto"));
 
                     b.Property<string>("Descripcion")
                         .HasMaxLength(255)
@@ -42,62 +39,76 @@ namespace tp5_Trani_Joaco_Alex.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("CategoriaId");
+                    b.HasKey("IdCategoriaProducto");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categorias_Productos");
 
                     b.HasData(
                         new
                         {
-                            CategoriaId = 1,
-                            Activo = true,
-                            Descripcion = "Gaseosas, aguas, jugos",
-                            Nombre = "Bebidas"
+                            IdCategoriaProducto = 1,
+                            Descripcion = "Cremas hidratantes y anti-age",
+                            Nombre = "Cremas Faciales"
                         },
                         new
                         {
-                            CategoriaId = 2,
-                            Activo = true,
-                            Descripcion = "Papas, palitos, chizitos",
-                            Nombre = "Snacks"
-                        },
-                        new
-                        {
-                            CategoriaId = 3,
-                            Activo = true,
-                            Descripcion = "Leche, yogur, quesos",
-                            Nombre = "Lácteos"
-                        },
-                        new
-                        {
-                            CategoriaId = 4,
-                            Activo = true,
-                            Descripcion = "Fideos, arroz, conservas",
-                            Nombre = "Almacén"
-                        },
-                        new
-                        {
-                            CategoriaId = 5,
-                            Activo = true,
-                            Descripcion = "Detergentes, lavandina",
-                            Nombre = "Limpieza"
+                            IdCategoriaProducto = 2,
+                            Descripcion = "Lociones y exfoliantes",
+                            Nombre = "Cuidado Corporal"
                         });
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.Clientes", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Categoria_Servicio", b =>
                 {
-                    b.Property<int>("ClienteId")
+                    b.Property<int>("IdCategoriaServicio")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClienteId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCategoriaServicio"));
 
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("IdCategoriaServicio");
+
+                    b.ToTable("Categorias_Servicios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdCategoriaServicio = 1,
+                            Descripcion = "Tratamientos para el cuidado del rostro",
+                            Nombre = "Facial"
+                        },
+                        new
+                        {
+                            IdCategoriaServicio = 2,
+                            Descripcion = "Tratamientos estéticos corporales",
+                            Nombre = "Corporal"
+                        });
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Cliente", b =>
+                {
+                    b.Property<int>("IdCliente")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCliente"));
+
+                    b.Property<string>("Apellido")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -108,149 +119,358 @@ namespace tp5_Trani_Joaco_Alex.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("ClienteId");
+                    b.HasKey("IdCliente");
+
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Clientes");
 
                     b.HasData(
                         new
                         {
-                            ClienteId = 1,
-                            Activo = true,
-                            Email = "cf@correo.com",
-                            Nombre = "Consumidor Final",
-                            Telefono = "-"
-                        },
-                        new
-                        {
-                            ClienteId = 2,
-                            Activo = true,
-                            Email = "alex@correo.com",
-                            Nombre = "Alex Comprador",
+                            IdCliente = 1,
+                            Apellido = "Falkenstein",
+                            IdUsuario = 2,
+                            Nombre = "Alex",
                             Telefono = "2954-111111"
                         },
                         new
                         {
-                            ClienteId = 3,
-                            Activo = true,
-                            Email = "maria@correo.com",
-                            Nombre = "Maria Cliente",
+                            IdCliente = 2,
+                            Apellido = "Gomez",
+                            IdUsuario = 3,
+                            Nombre = "Maria",
                             Telefono = "2954-222222"
-                        },
-                        new
-                        {
-                            ClienteId = 4,
-                            Activo = true,
-                            Email = "compras@empresalocal.com",
-                            Nombre = "Empresa Local S.R.L.",
-                            Telefono = "2954-333333"
-                        },
-                        new
-                        {
-                            ClienteId = 5,
-                            Activo = true,
-                            Email = "juanp@correo.com",
-                            Nombre = "Juan Perez",
-                            Telefono = "2954-444444"
                         });
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.DetalleIngresoProductos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Detalle_Ingreso", b =>
                 {
-                    b.Property<int>("DetalleIngresoId")
+                    b.Property<int>("IdDetalleIngreso")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleIngresoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetalleIngreso"));
 
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<int>("IngresoProductoId")
+                    b.Property<int>("IdIngreso")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdProducto")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PrecioCompraUnitario")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("IdDetalleIngreso");
+
+                    b.HasIndex("IdIngreso");
+
+                    b.HasIndex("IdProducto");
+
+                    b.ToTable("Detalles_Ingresos");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Detalle_Pedido", b =>
+                {
+                    b.Property<int>("IdDetallePedido")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetallePedido"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdPedido")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdProducto")
                         .HasColumnType("int");
 
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("int");
+                    b.HasKey("IdDetallePedido");
 
-                    b.HasKey("DetalleIngresoId");
+                    b.HasIndex("IdPedido");
 
-                    b.HasIndex("IngresoProductoId");
+                    b.HasIndex("IdProducto");
 
-                    b.HasIndex("ProductoId");
+                    b.ToTable("Detalles_Pedidos");
 
-                    b.ToTable("DetalleIngresoProductos");
+                    b.HasData(
+                        new
+                        {
+                            IdDetallePedido = 1,
+                            Cantidad = 2,
+                            IdPedido = 1,
+                            IdProducto = 1,
+                            PrecioUnitario = 8500m
+                        });
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.DetalleSalidaProductos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Estado_Pedido", b =>
                 {
-                    b.Property<int>("DetalleSalidaId")
+                    b.Property<int>("IdEstadoPedido")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleSalidaId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEstadoPedido"));
 
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
-                    b.Property<decimal>("PrecioUnitario")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("int");
+                    b.HasKey("IdEstadoPedido");
 
-                    b.Property<int>("SalidaProductoId")
-                        .HasColumnType("int");
+                    b.ToTable("Estados_Pedidos");
 
-                    b.HasKey("DetalleSalidaId");
-
-                    b.HasIndex("ProductoId");
-
-                    b.HasIndex("SalidaProductoId");
-
-                    b.ToTable("DetalleSalidaProductos");
+                    b.HasData(
+                        new
+                        {
+                            IdEstadoPedido = 1,
+                            Descripcion = "Pedido generado, falta preparar y pagar",
+                            Nombre = "Pendiente"
+                        },
+                        new
+                        {
+                            IdEstadoPedido = 2,
+                            Descripcion = "Separado y esperando al cliente",
+                            Nombre = "Listo para Retiro"
+                        },
+                        new
+                        {
+                            IdEstadoPedido = 3,
+                            Descripcion = "Pagado y entregado",
+                            Nombre = "Entregado"
+                        },
+                        new
+                        {
+                            IdEstadoPedido = 4,
+                            Descripcion = "Pedido anulado",
+                            Nombre = "Cancelado"
+                        });
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.IngresoProductos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Estado_Turno", b =>
                 {
-                    b.Property<int>("IngresoProductoId")
+                    b.Property<int>("IdEstadoTurno")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IngresoProductoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEstadoTurno"));
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("IdEstadoTurno");
+
+                    b.ToTable("Estados_Turnos");
+
+                    b.HasData(
+                        new
+                        {
+                            IdEstadoTurno = 1,
+                            Descripcion = "Turno agendado, a la espera de ser atendido",
+                            Nombre = "Pendiente"
+                        },
+                        new
+                        {
+                            IdEstadoTurno = 2,
+                            Descripcion = "El servicio fue realizado",
+                            Nombre = "Completado"
+                        },
+                        new
+                        {
+                            IdEstadoTurno = 3,
+                            Descripcion = "Turno cancelado por cliente o admin",
+                            Nombre = "Cancelado"
+                        });
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Horario_Inhabilitado", b =>
+                {
+                    b.Property<int>("IdInhabilitacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdInhabilitacion"));
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProveedorId")
+                    b.Property<TimeSpan>("HoraFin")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("HoraInicio")
+                        .HasColumnType("time");
+
+                    b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                    b.HasKey("IdInhabilitacion");
 
-                    b.HasKey("IngresoProductoId");
+                    b.HasIndex("IdUsuario");
 
-                    b.HasIndex("ProveedorId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("IngresoProductos");
+                    b.ToTable("Horarios_Inhabilitados");
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.Productos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Ingreso_Stock", b =>
                 {
-                    b.Property<int>("ProductoId")
+                    b.Property<int>("IdIngreso")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdIngreso"));
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("IdIngreso");
+
+                    b.ToTable("Ingresos_Stock");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Metodo_Pago", b =>
+                {
+                    b.Property<int>("IdMetodoPago")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMetodoPago"));
 
                     b.Property<bool>("Activo")
                         .HasColumnType("bit");
 
-                    b.Property<int>("CategoriaId")
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("IdMetodoPago");
+
+                    b.ToTable("Metodos_Pago");
+
+                    b.HasData(
+                        new
+                        {
+                            IdMetodoPago = 1,
+                            Activo = true,
+                            Nombre = "Efectivo"
+                        },
+                        new
+                        {
+                            IdMetodoPago = 2,
+                            Activo = true,
+                            Nombre = "Tarjeta de Débito"
+                        },
+                        new
+                        {
+                            IdMetodoPago = 3,
+                            Activo = true,
+                            Nombre = "MercadoPago (Transferencia)"
+                        });
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Pago", b =>
+                {
+                    b.Property<int>("IdPago")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPago"));
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdMetodoPago")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdPedido")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdTurno")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("MontoTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("IdPago");
+
+                    b.HasIndex("IdMetodoPago");
+
+                    b.HasIndex("IdPedido");
+
+                    b.HasIndex("IdTurno");
+
+                    b.ToTable("Pagos");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Pedido", b =>
+                {
+                    b.Property<int>("IdPedido")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPedido"));
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdCliente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdEstadoPedido")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdPedido");
+
+                    b.HasIndex("IdCliente");
+
+                    b.HasIndex("IdEstadoPedido");
+
+                    b.ToTable("Pedidos");
+
+                    b.HasData(
+                        new
+                        {
+                            IdPedido = 1,
+                            Fecha = new DateTime(2026, 11, 9, 0, 0, 0, 0, DateTimeKind.Local),
+                            IdCliente = 2,
+                            IdEstadoPedido = 1
+                        });
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Producto", b =>
+                {
+                    b.Property<int>("IdProducto")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProducto"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("IdCategoriaProducto")
                         .HasColumnType("int");
 
                     b.Property<string>("Imagen")
@@ -265,351 +485,400 @@ namespace tp5_Trani_Joaco_Alex.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Stock")
+                    b.Property<int>("StockActual")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductoId");
+                    b.HasKey("IdProducto");
 
-                    b.HasIndex("CategoriaId");
+                    b.HasIndex("IdCategoriaProducto");
 
                     b.ToTable("Productos");
 
                     b.HasData(
                         new
                         {
-                            ProductoId = 1,
+                            IdProducto = 1,
                             Activo = true,
-                            CategoriaId = 1,
-                            Imagen = "coca.jpg",
-                            Nombre = "Coca Cola 2.25L",
-                            Precio = 2500m,
-                            Stock = 50
+                            Descripcion = "Con ácido hialurónico 50g",
+                            IdCategoriaProducto = 1,
+                            Imagen = "crema_dia.jpg",
+                            Nombre = "Crema Hidratante Día",
+                            Precio = 8500m,
+                            StockActual = 15
                         },
                         new
                         {
-                            ProductoId = 2,
+                            IdProducto = 2,
                             Activo = true,
-                            CategoriaId = 1,
-                            Imagen = "sprite.jpg",
-                            Nombre = "Sprite 2.25L",
-                            Precio = 2400m,
-                            Stock = 40
+                            Descripcion = "Antioxidante 30ml",
+                            IdCategoriaProducto = 1,
+                            Imagen = "serum_vitc.jpg",
+                            Nombre = "Serum Vitamina C",
+                            Precio = 11000m,
+                            StockActual = 10
                         },
                         new
                         {
-                            ProductoId = 3,
+                            IdProducto = 3,
                             Activo = true,
-                            CategoriaId = 2,
-                            Imagen = "lays.jpg",
-                            Nombre = "Papas Lays Clásicas 145g",
-                            Precio = 1800m,
-                            Stock = 30
-                        },
-                        new
-                        {
-                            ProductoId = 4,
-                            Activo = true,
-                            CategoriaId = 3,
-                            Imagen = "leche.jpg",
-                            Nombre = "Leche Serenísima 1L",
-                            Precio = 1200m,
-                            Stock = 60
-                        },
-                        new
-                        {
-                            ProductoId = 5,
-                            Activo = true,
-                            CategoriaId = 4,
-                            Imagen = "fideos.jpg",
-                            Nombre = "Fideos Matarazzo 500g",
-                            Precio = 1100m,
-                            Stock = 100
-                        },
-                        new
-                        {
-                            ProductoId = 6,
-                            Activo = true,
-                            CategoriaId = 5,
-                            Imagen = "lavandina.jpg",
-                            Nombre = "Lavandina Ayudín 1L",
-                            Precio = 950m,
-                            Stock = 25
+                            Descripcion = "Con microgránulos naturales 200g",
+                            IdCategoriaProducto = 2,
+                            Imagen = "exfoliante.jpg",
+                            Nombre = "Exfoliante Corporal",
+                            Precio = 9000m,
+                            StockActual = 20
                         });
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.Proveedores", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Rol", b =>
                 {
-                    b.Property<int>("ProveedorId")
+                    b.Property<int>("IdRol")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProveedorId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdRol"));
 
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("RazonSocial")
+                    b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("Telefono")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("ProveedorId");
+                    b.HasKey("IdRol");
 
-                    b.ToTable("Proveedores");
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
                         {
-                            ProveedorId = 1,
-                            Activo = true,
-                            Email = "ventas@bebidas.com",
-                            RazonSocial = "Distribuidora Bebidas S.A.",
-                            Telefono = "11-5555-0001"
+                            IdRol = 1,
+                            Nombre = "Administrador"
                         },
                         new
                         {
-                            ProveedorId = 2,
-                            Activo = true,
-                            Email = "pedidos@snackspampeanos.com",
-                            RazonSocial = "Snacks Pampeanos",
-                            Telefono = "2954-5555-0002"
-                        },
-                        new
-                        {
-                            ProveedorId = 3,
-                            Activo = true,
-                            Email = "contacto@lacteosdelsur.com",
-                            RazonSocial = "Lácteos del Sur",
-                            Telefono = "2954-5555-0003"
-                        },
-                        new
-                        {
-                            ProveedorId = 4,
-                            Activo = true,
-                            Email = "info@mayorista.com",
-                            RazonSocial = "Mayorista Almacén",
-                            Telefono = "11-5555-0004"
-                        },
-                        new
-                        {
-                            ProveedorId = 5,
-                            Activo = true,
-                            Email = "ventas@quimica.com",
-                            RazonSocial = "Química Limpieza",
-                            Telefono = "2954-5555-0005"
+                            IdRol = 2,
+                            Nombre = "Cliente"
                         });
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.SalidaProductos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Servicio", b =>
                 {
-                    b.Property<int>("SalidaProductoId")
+                    b.Property<int>("IdServicio")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalidaProductoId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdServicio"));
 
-                    b.Property<int>("ClienteId")
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("IdCategoriaServicio")
                         .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("IdServicio");
+
+                    b.HasIndex("IdCategoriaServicio");
+
+                    b.ToTable("Servicios");
+
+                    b.HasData(
+                        new
+                        {
+                            IdServicio = 1,
+                            Descripcion = "Incluye extracción y mascarilla",
+                            IdCategoriaServicio = 1,
+                            Nombre = "Limpieza Facial Profunda",
+                            Precio = 15000m
+                        },
+                        new
+                        {
+                            IdServicio = 2,
+                            Descripcion = "Sesión de 60 minutos",
+                            IdCategoriaServicio = 2,
+                            Nombre = "Masaje Descontracturante",
+                            Precio = 12000m
+                        },
+                        new
+                        {
+                            IdServicio = 3,
+                            Descripcion = "Renovación celular",
+                            IdCategoriaServicio = 1,
+                            Nombre = "Peeling Químico",
+                            Precio = 20000m
+                        });
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Turno", b =>
+                {
+                    b.Property<int>("IdTurno")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTurno"));
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<TimeSpan>("HoraInicio")
+                        .HasColumnType("time");
+
+                    b.Property<int>("IdCliente")
                         .HasColumnType("int");
 
-                    b.HasKey("SalidaProductoId");
+                    b.Property<int>("IdEstadoTurno")
+                        .HasColumnType("int");
 
-                    b.HasIndex("ClienteId");
+                    b.Property<int>("IdServicio")
+                        .HasColumnType("int");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasKey("IdTurno");
 
-                    b.ToTable("SalidaProductos");
+                    b.HasIndex("IdCliente");
+
+                    b.HasIndex("IdEstadoTurno");
+
+                    b.HasIndex("IdServicio");
+
+                    b.ToTable("Turnos");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTurno = 1,
+                            Fecha = new DateTime(2026, 11, 10, 0, 0, 0, 0, DateTimeKind.Local),
+                            HoraInicio = new TimeSpan(0, 10, 0, 0, 0),
+                            IdCliente = 1,
+                            IdEstadoTurno = 1,
+                            IdServicio = 1
+                        });
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.Usuarios", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Usuario", b =>
                 {
-                    b.Property<int>("UsuarioId")
+                    b.Property<int>("IdUsuario")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
 
-                    b.Property<bool>("Activo")
-                        .HasColumnType("bit");
+                    b.Property<string>("Contrasenia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("IdRol")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                    b.HasKey("IdUsuario");
 
-                    b.Property<string>("Rol")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("UsuarioId");
+                    b.HasIndex("IdRol");
 
                     b.ToTable("Usuarios");
 
                     b.HasData(
                         new
                         {
-                            UsuarioId = 1,
-                            Activo = true,
-                            Email = "admin@ites.edu.ar",
-                            Nombre = "Joaquin Admin",
-                            Password = "123",
-                            Rol = "Admin"
+                            IdUsuario = 1,
+                            Contrasenia = "123",
+                            Email = "admin@moer.com",
+                            IdRol = 1
                         },
                         new
                         {
-                            UsuarioId = 2,
-                            Activo = true,
-                            Email = "caja1@ites.edu.ar",
-                            Nombre = "Caja 1 - Turno Mañana",
-                            Password = "123",
-                            Rol = "Operador"
-                        },
-                        new
-                        {
-                            UsuarioId = 3,
-                            Activo = true,
-                            Email = "caja2@ites.edu.ar",
-                            Nombre = "Caja 2 - Turno Tarde",
-                            Password = "123",
-                            Rol = "Operador"
-                        },
-                        new
-                        {
-                            UsuarioId = 4,
-                            Activo = true,
+                            IdUsuario = 2,
+                            Contrasenia = "123",
                             Email = "alex@correo.com",
-                            Nombre = "Alex Comprador",
-                            Password = "123",
-                            Rol = "Cliente"
+                            IdRol = 2
                         },
                         new
                         {
-                            UsuarioId = 5,
-                            Activo = true,
+                            IdUsuario = 3,
+                            Contrasenia = "123",
                             Email = "maria@correo.com",
-                            Nombre = "Maria Cliente",
-                            Password = "123",
-                            Rol = "Cliente"
+                            IdRol = 2
                         });
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.DetalleIngresoProductos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Cliente", b =>
                 {
-                    b.HasOne("tp5_Trani_Joaco_Alex.Models.IngresoProductos", "IngresoProducto")
-                        .WithMany("Detalles")
-                        .HasForeignKey("IngresoProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tp5_Trani_Joaco_Alex.Models.Productos", "Producto")
+                    b.HasOne("MoerEsteticaBackend.Models.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("ProductoId")
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("IngresoProducto");
-
-                    b.Navigation("Producto");
-                });
-
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.DetalleSalidaProductos", b =>
-                {
-                    b.HasOne("tp5_Trani_Joaco_Alex.Models.Productos", "Producto")
-                        .WithMany()
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tp5_Trani_Joaco_Alex.Models.SalidaProductos", "SalidaProducto")
-                        .WithMany("Detalles")
-                        .HasForeignKey("SalidaProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Producto");
-
-                    b.Navigation("SalidaProducto");
-                });
-
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.IngresoProductos", b =>
-                {
-                    b.HasOne("tp5_Trani_Joaco_Alex.Models.Proveedores", "Proveedor")
-                        .WithMany()
-                        .HasForeignKey("ProveedorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tp5_Trani_Joaco_Alex.Models.Usuarios", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Proveedor");
 
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.Productos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Detalle_Ingreso", b =>
                 {
-                    b.HasOne("tp5_Trani_Joaco_Alex.Models.Categoria", "Categoria")
-                        .WithMany()
-                        .HasForeignKey("CategoriaId")
+                    b.HasOne("MoerEsteticaBackend.Models.Ingreso_Stock", "Ingreso_Stock")
+                        .WithMany("Detalles")
+                        .HasForeignKey("IdIngreso")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Categoria");
+                    b.HasOne("MoerEsteticaBackend.Models.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("IdProducto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ingreso_Stock");
+
+                    b.Navigation("Producto");
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.SalidaProductos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Detalle_Pedido", b =>
                 {
-                    b.HasOne("tp5_Trani_Joaco_Alex.Models.Clientes", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
+                    b.HasOne("MoerEsteticaBackend.Models.Pedido", "Pedido")
+                        .WithMany("Detalles")
+                        .HasForeignKey("IdPedido")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("tp5_Trani_Joaco_Alex.Models.Usuarios", "Usuario")
+                    b.HasOne("MoerEsteticaBackend.Models.Producto", "Producto")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("IdProducto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pedido");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Horario_Inhabilitado", b =>
+                {
+                    b.HasOne("MoerEsteticaBackend.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Pago", b =>
+                {
+                    b.HasOne("MoerEsteticaBackend.Models.Metodo_Pago", "Metodo_Pago")
+                        .WithMany()
+                        .HasForeignKey("IdMetodoPago")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoerEsteticaBackend.Models.Pedido", "Pedido")
+                        .WithMany()
+                        .HasForeignKey("IdPedido");
+
+                    b.HasOne("MoerEsteticaBackend.Models.Turno", "Turno")
+                        .WithMany()
+                        .HasForeignKey("IdTurno");
+
+                    b.Navigation("Metodo_Pago");
+
+                    b.Navigation("Pedido");
+
+                    b.Navigation("Turno");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Pedido", b =>
+                {
+                    b.HasOne("MoerEsteticaBackend.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("IdCliente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoerEsteticaBackend.Models.Estado_Pedido", "Estado_Pedido")
+                        .WithMany()
+                        .HasForeignKey("IdEstadoPedido")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cliente");
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Estado_Pedido");
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.IngresoProductos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Producto", b =>
+                {
+                    b.HasOne("MoerEsteticaBackend.Models.Categoria_Producto", "Categoria_Producto")
+                        .WithMany()
+                        .HasForeignKey("IdCategoriaProducto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria_Producto");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Servicio", b =>
+                {
+                    b.HasOne("MoerEsteticaBackend.Models.Categoria_Servicio", "Categoria_Servicio")
+                        .WithMany()
+                        .HasForeignKey("IdCategoriaServicio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria_Servicio");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Turno", b =>
+                {
+                    b.HasOne("MoerEsteticaBackend.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("IdCliente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoerEsteticaBackend.Models.Estado_Turno", "Estado_Turno")
+                        .WithMany()
+                        .HasForeignKey("IdEstadoTurno")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoerEsteticaBackend.Models.Servicio", "Servicio")
+                        .WithMany()
+                        .HasForeignKey("IdServicio")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Estado_Turno");
+
+                    b.Navigation("Servicio");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Usuario", b =>
+                {
+                    b.HasOne("MoerEsteticaBackend.Models.Rol", "Rol")
+                        .WithMany()
+                        .HasForeignKey("IdRol")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Ingreso_Stock", b =>
                 {
                     b.Navigation("Detalles");
                 });
 
-            modelBuilder.Entity("tp5_Trani_Joaco_Alex.Models.SalidaProductos", b =>
+            modelBuilder.Entity("MoerEsteticaBackend.Models.Pedido", b =>
                 {
                     b.Navigation("Detalles");
                 });

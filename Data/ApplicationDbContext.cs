@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using tp5_Trani_Joaco_Alex.Models;
+using System;
+using MoerEsteticaBackend.Models;
 
-namespace tp5_Trani_Joaco_Alex.Data
+namespace MoerEstetica.API.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -10,64 +11,126 @@ namespace tp5_Trani_Joaco_Alex.Data
         {
         }
 
-        public DbSet<Usuarios> Usuarios { get; set; }
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<Proveedores> Proveedores { get; set; }
-        public DbSet<Clientes> Clientes { get; set; }
-        public DbSet<Productos> Productos { get; set; }
-        public DbSet<IngresoProductos> IngresoProductos { get; set; }
-        public DbSet<SalidaProductos> SalidaProductos { get; set; }
-        public DbSet<DetalleIngresoProductos> DetalleIngresoProductos { get; set; }
-        public DbSet<DetalleSalidaProductos> DetalleSalidaProductos { get; set; }
+        // Tablas Normalizadas 3FN según DER MOER Estética
+        public DbSet<Rol> Roles { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
+
+        public DbSet<Categoria_Servicio> Categorias_Servicios { get; set; }
+        public DbSet<Servicio> Servicios { get; set; }
+        public DbSet<Estado_Turno> Estados_Turnos { get; set; }
+        public DbSet<Turno> Turnos { get; set; }
+        public DbSet<Horario_Inhabilitado> Horarios_Inhabilitados { get; set; }
+
+        public DbSet<Categoria_Producto> Categorias_Productos { get; set; }
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Estado_Pedido> Estados_Pedidos { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Detalle_Pedido> Detalles_Pedidos { get; set; }
+
+        public DbSet<Ingreso_Stock> Ingresos_Stock { get; set; }
+        public DbSet<Detalle_Ingreso> Detalles_Ingresos { get; set; }
+
+        public DbSet<Metodo_Pago> Metodos_Pago { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // 1. Usuarios (Administrador, 2 Cajeros, 2 Clientes Móviles)
-            modelBuilder.Entity<Usuarios>().HasData(
-                new Usuarios { UsuarioId = 1, Nombre = "Joaquin Admin", Email = "admin@ites.edu.ar", Password = "123", Rol = Roles.Admin, Activo = true },
-                new Usuarios { UsuarioId = 2, Nombre = "Caja 1 - Turno Mañana", Email = "caja1@ites.edu.ar", Password = "123", Rol = Roles.Operador, Activo = true },
-                new Usuarios { UsuarioId = 3, Nombre = "Caja 2 - Turno Tarde", Email = "caja2@ites.edu.ar", Password = "123", Rol = Roles.Operador, Activo = true },
-                new Usuarios { UsuarioId = 4, Nombre = "Alex Comprador", Email = "alex@correo.com", Password = "123", Rol = Roles.Cliente, Activo = true },
-                new Usuarios { UsuarioId = 5, Nombre = "Maria Cliente", Email = "maria@correo.com", Password = "123", Rol = Roles.Cliente, Activo = true }
+            // Relaciones para Pagos (Nulleable para Pedido o Turno)
+            modelBuilder.Entity<Pago>()
+                .HasOne(p => p.Pedido)
+                .WithMany()
+                .HasForeignKey(p => p.IdPedido)
+                .IsRequired(false);
+
+            modelBuilder.Entity<Pago>()
+                .HasOne(p => p.Turno)
+                .WithMany()
+                .HasForeignKey(p => p.IdTurno)
+                .IsRequired(false);
+
+            // --- SEEDING DE DATOS (Ficticios para pruebas) ---
+
+            // 1. Roles
+            modelBuilder.Entity<Rol>().HasData(
+                new Rol { IdRol = 1, Nombre = "Administrador" },
+                new Rol { IdRol = 2, Nombre = "Cliente" }
             );
 
-            // 2. Clientes (Consumidor Final y clientes registrados)
-            modelBuilder.Entity<Clientes>().HasData(
-                new Clientes { ClienteId = 1, Nombre = "Consumidor Final", Email = "cf@correo.com", Telefono = "-", Activo = true },
-                new Clientes { ClienteId = 2, Nombre = "Alex Comprador", Email = "alex@correo.com", Telefono = "2954-111111", Activo = true },
-                new Clientes { ClienteId = 3, Nombre = "Maria Cliente", Email = "maria@correo.com", Telefono = "2954-222222", Activo = true },
-                new Clientes { ClienteId = 4, Nombre = "Empresa Local S.R.L.", Email = "compras@empresalocal.com", Telefono = "2954-333333", Activo = true },
-                new Clientes { ClienteId = 5, Nombre = "Juan Perez", Email = "juanp@correo.com", Telefono = "2954-444444", Activo = true }
+            // 2. Usuarios
+            modelBuilder.Entity<Usuario>().HasData(
+                new Usuario { IdUsuario = 1, Email = "admin@moer.com", Contrasenia = "123", IdRol = 1 },
+                new Usuario { IdUsuario = 2, Email = "alex@correo.com", Contrasenia = "123", IdRol = 2 },
+                new Usuario { IdUsuario = 3, Email = "maria@correo.com", Contrasenia = "123", IdRol = 2 }
             );
 
-            // 3. Categorías
-            modelBuilder.Entity<Categoria>().HasData(
-                new Categoria { CategoriaId = 1, Nombre = "Bebidas", Descripcion = "Gaseosas, aguas, jugos", Activo = true },
-                new Categoria { CategoriaId = 2, Nombre = "Snacks", Descripcion = "Papas, palitos, chizitos", Activo = true },
-                new Categoria { CategoriaId = 3, Nombre = "Lácteos", Descripcion = "Leche, yogur, quesos", Activo = true },
-                new Categoria { CategoriaId = 4, Nombre = "Almacén", Descripcion = "Fideos, arroz, conservas", Activo = true },
-                new Categoria { CategoriaId = 5, Nombre = "Limpieza", Descripcion = "Detergentes, lavandina", Activo = true }
+            // 3. Clientes
+            modelBuilder.Entity<Cliente>().HasData(
+                new Cliente { IdCliente = 1, Nombre = "Alex", Apellido = "Falkenstein", Telefono = "2954-111111", IdUsuario = 2 },
+                new Cliente { IdCliente = 2, Nombre = "Maria", Apellido = "Gomez", Telefono = "2954-222222", IdUsuario = 3 }
             );
 
-            // 4. Proveedores
-            modelBuilder.Entity<Proveedores>().HasData(
-                new Proveedores { ProveedorId = 1, RazonSocial = "Distribuidora Bebidas S.A.", Telefono = "11-5555-0001", Email = "ventas@bebidas.com", Activo = true },
-                new Proveedores { ProveedorId = 2, RazonSocial = "Snacks Pampeanos", Telefono = "2954-5555-0002", Email = "pedidos@snackspampeanos.com", Activo = true },
-                new Proveedores { ProveedorId = 3, RazonSocial = "Lácteos del Sur", Telefono = "2954-5555-0003", Email = "contacto@lacteosdelsur.com", Activo = true },
-                new Proveedores { ProveedorId = 4, RazonSocial = "Mayorista Almacén", Telefono = "11-5555-0004", Email = "info@mayorista.com", Activo = true },
-                new Proveedores { ProveedorId = 5, RazonSocial = "Química Limpieza", Telefono = "2954-5555-0005", Email = "ventas@quimica.com", Activo = true }
+            // 4. Categorías de Servicios
+            modelBuilder.Entity<Categoria_Servicio>().HasData(
+                new Categoria_Servicio { IdCategoriaServicio = 1, Nombre = "Facial", Descripcion = "Tratamientos para el cuidado del rostro" },
+                new Categoria_Servicio { IdCategoriaServicio = 2, Nombre = "Corporal", Descripcion = "Tratamientos estéticos corporales" }
             );
 
-            // 5. Productos
-            modelBuilder.Entity<Productos>().HasData(
-                new Productos { ProductoId = 1, Nombre = "Coca Cola 2.25L", Precio = 2500m, Stock = 50, CategoriaId = 1, Imagen = "coca.jpg", Activo = true },
-                new Productos { ProductoId = 2, Nombre = "Sprite 2.25L", Precio = 2400m, Stock = 40, CategoriaId = 1, Imagen = "sprite.jpg", Activo = true },
-                new Productos { ProductoId = 3, Nombre = "Papas Lays Clásicas 145g", Precio = 1800m, Stock = 30, CategoriaId = 2, Imagen = "lays.jpg", Activo = true },
-                new Productos { ProductoId = 4, Nombre = "Leche Serenísima 1L", Precio = 1200m, Stock = 60, CategoriaId = 3, Imagen = "leche.jpg", Activo = true },
-                new Productos { ProductoId = 5, Nombre = "Fideos Matarazzo 500g", Precio = 1100m, Stock = 100, CategoriaId = 4, Imagen = "fideos.jpg", Activo = true },
-                new Productos { ProductoId = 6, Nombre = "Lavandina Ayudín 1L", Precio = 950m, Stock = 25, CategoriaId = 5, Imagen = "lavandina.jpg", Activo = true }
+            // 5. Servicios
+            modelBuilder.Entity<Servicio>().HasData(
+                new Servicio { IdServicio = 1, Nombre = "Limpieza Facial Profunda", Descripcion = "Incluye extracción y mascarilla", Precio = 15000m, IdCategoriaServicio = 1 },
+                new Servicio { IdServicio = 2, Nombre = "Masaje Descontracturante", Descripcion = "Sesión de 60 minutos", Precio = 12000m, IdCategoriaServicio = 2 },
+                new Servicio { IdServicio = 3, Nombre = "Peeling Químico", Descripcion = "Renovación celular", Precio = 20000m, IdCategoriaServicio = 1 }
+            );
+
+            // 6. Estados de Turno
+            modelBuilder.Entity<Estado_Turno>().HasData(
+                new Estado_Turno { IdEstadoTurno = 1, Nombre = "Pendiente", Descripcion = "Turno agendado, a la espera de ser atendido" },
+                new Estado_Turno { IdEstadoTurno = 2, Nombre = "Completado", Descripcion = "El servicio fue realizado" },
+                new Estado_Turno { IdEstadoTurno = 3, Nombre = "Cancelado", Descripcion = "Turno cancelado por cliente o admin" }
+            );
+
+            // 7. Categorías de Productos
+            modelBuilder.Entity<Categoria_Producto>().HasData(
+                new Categoria_Producto { IdCategoriaProducto = 1, Nombre = "Cremas Faciales", Descripcion = "Cremas hidratantes y anti-age" },
+                new Categoria_Producto { IdCategoriaProducto = 2, Nombre = "Cuidado Corporal", Descripcion = "Lociones y exfoliantes" }
+            );
+
+            // 8. Productos
+            modelBuilder.Entity<Producto>().HasData(
+                new Producto { IdProducto = 1, Nombre = "Crema Hidratante Día", Descripcion = "Con ácido hialurónico 50g", Precio = 8500m, StockActual = 15, Imagen = "crema_dia.jpg", Activo = true, IdCategoriaProducto = 1 },
+                new Producto { IdProducto = 2, Nombre = "Serum Vitamina C", Descripcion = "Antioxidante 30ml", Precio = 11000m, StockActual = 10, Imagen = "serum_vitc.jpg", Activo = true, IdCategoriaProducto = 1 },
+                new Producto { IdProducto = 3, Nombre = "Exfoliante Corporal", Descripcion = "Con microgránulos naturales 200g", Precio = 9000m, StockActual = 20, Imagen = "exfoliante.jpg", Activo = true, IdCategoriaProducto = 2 }
+            );
+
+            // 9. Estados de Pedido
+            modelBuilder.Entity<Estado_Pedido>().HasData(
+                new Estado_Pedido { IdEstadoPedido = 1, Nombre = "Pendiente", Descripcion = "Pedido generado, falta preparar y pagar" },
+                new Estado_Pedido { IdEstadoPedido = 2, Nombre = "Listo para Retiro", Descripcion = "Separado y esperando al cliente" },
+                new Estado_Pedido { IdEstadoPedido = 3, Nombre = "Entregado", Descripcion = "Pagado y entregado" },
+                new Estado_Pedido { IdEstadoPedido = 4, Nombre = "Cancelado", Descripcion = "Pedido anulado" }
+            );
+
+            // 10. Métodos de Pago
+            modelBuilder.Entity<Metodo_Pago>().HasData(
+                new Metodo_Pago { IdMetodoPago = 1, Nombre = "Efectivo", Activo = true },
+                new Metodo_Pago { IdMetodoPago = 2, Nombre = "Tarjeta de Débito", Activo = true },
+                new Metodo_Pago { IdMetodoPago = 3, Nombre = "MercadoPago (Transferencia)", Activo = true }
+            );
+
+            // Semillas opcionales de prueba: 1 Turno y 1 Pedido para arrancar
+            modelBuilder.Entity<Turno>().HasData(
+                new Turno { IdTurno = 1, Fecha = DateTime.Today.AddDays(1), HoraInicio = new TimeSpan(10, 0, 0), IdCliente = 1, IdServicio = 1, IdEstadoTurno = 1 }
+            );
+
+            modelBuilder.Entity<Pedido>().HasData(
+                new Pedido { IdPedido = 1, Fecha = DateTime.Today, IdCliente = 2, IdEstadoPedido = 1 }
+            );
+
+            modelBuilder.Entity<Detalle_Pedido>().HasData(
+                new Detalle_Pedido { IdDetallePedido = 1, Cantidad = 2, PrecioUnitario = 8500m, IdPedido = 1, IdProducto = 1 }
             );
         }
     }
