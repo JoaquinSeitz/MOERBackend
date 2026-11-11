@@ -90,13 +90,19 @@ namespace MoerEstetica.API.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> GetAgenda([FromQuery] DateTime? fecha)
         {
-            var queryFecha = fecha?.Date ?? DateTime.Today;
-
-            var turnos = await _context.Turnos
+            var query = _context.Turnos
                 .Include(t => t.Servicio)
                 .Include(t => t.Estado_Turno)
                 .Include(t => t.Cliente)
-                .Where(t => t.Fecha.Date == queryFecha)
+                .AsQueryable();
+
+            // Solo filtra por fecha si explícitamente se envió una
+            if (fecha.HasValue)
+            {
+                query = query.Where(t => t.Fecha.Date == fecha.Value.Date);
+            }
+
+            var turnos = await query
                 .OrderBy(t => t.HoraInicio)
                 .Select(t => new TurnoResponseDTO
                 {

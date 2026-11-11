@@ -800,3 +800,386 @@ Error Number:547,State:0,Class:16
 2026-11-10 19:57:05.343 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 303.0455 ms
 2026-11-10 19:57:22.303 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 0.0976 ms
 2026-11-10 19:57:22.493 -03:00 [INF] HTTP POST /api/usuarios/login respondió 200 en 181.2078 ms
+2026-11-10 20:06:18.954 -03:00 [INF] Migraciones aplicadas exitosamente en la base de datos.
+2026-11-10 20:06:19.296 -03:00 [INF] Now listening on: https://localhost:7133
+2026-11-10 20:06:19.301 -03:00 [INF] Now listening on: http://localhost:5253
+2026-11-10 20:06:19.392 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-10 20:06:19.393 -03:00 [INF] Hosting environment: Development
+2026-11-10 20:06:19.394 -03:00 [INF] Content root path: C:\Users\Joaquin Seitz\Desktop\GitHub Repositorios\MOERBackend
+2026-11-10 20:09:16.950 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 1176.8406 ms
+2026-11-10 20:13:11.281 -03:00 [INF] HTTP POST /api/Usuarios/login respondió 200 en 792.5960 ms
+2026-11-10 20:13:20.934 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 123.8103 ms
+2026-11-10 20:13:58.261 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 116.3781 ms
+2026-11-10 20:15:09.407 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 23.6972 ms
+2026-11-10 20:15:12.405 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 34.1010 ms
+2026-11-10 20:15:28.443 -03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-11-10 20:15:28.452 -03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-11-10 20:15:28.504 -03:00 [INF] HTTP GET /api/productos respondió 200 en 102.0860 ms
+2026-11-10 20:15:28.698 -03:00 [INF] HTTP GET /uploads/prod_1_b1058bfb-e851-4e91-9cbd-fe8d211b1087.png respondió 304 en 28.7451 ms
+2026-11-10 20:17:01.196 -03:00 [WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+2026-11-10 20:17:01.397 -03:00 [WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+2026-11-10 20:17:01.443 -03:00 [INF] HTTP POST /api/pedidos respondió 200 en 532.1206 ms
+2026-11-10 20:17:04.099 -03:00 [INF] HTTP GET /api/productos respondió 200 en 35.9067 ms
+2026-11-10 20:57:08.011 -03:00 [INF] Migraciones aplicadas exitosamente en la base de datos.
+2026-11-10 20:57:08.441 -03:00 [INF] Now listening on: https://localhost:7133
+2026-11-10 20:57:08.513 -03:00 [INF] Now listening on: http://localhost:5253
+2026-11-10 20:57:08.612 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-10 20:57:08.614 -03:00 [INF] Hosting environment: Development
+2026-11-10 20:57:08.615 -03:00 [INF] Content root path: C:\Users\Joaquin Seitz\Desktop\GitHub Repositorios\MOERBackend
+2026-11-10 20:58:01.440 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 1412.9304 ms
+2026-11-10 20:58:04.167 -03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-11-10 20:58:04.195 -03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-11-10 20:58:04.360 -03:00 [INF] HTTP GET /api/productos respondió 200 en 452.3940 ms
+2026-11-10 20:58:09.448 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 241.4642 ms
+2026-11-10 20:58:13.894 -03:00 [WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+2026-11-10 20:58:14.378 -03:00 [WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+2026-11-10 20:58:14.430 -03:00 [INF] HTTP POST /api/pedidos respondió 200 en 1050.1814 ms
+2026-11-10 20:58:20.224 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 48.6032 ms
+2026-11-10 20:58:23.881 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 70.1860 ms
+2026-11-10 20:58:25.974 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 33.9062 ms
+2026-11-10 20:58:43.549 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 66.9173 ms
+2026-11-10 20:58:51.714 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 44.9780 ms
+2026-11-10 20:59:28.215 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 58.8144 ms
+2026-11-10 21:08:52.317 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 173.3638 ms
+2026-11-10 21:08:55.601 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 24.6435 ms
+2026-11-10 21:09:14.358 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 55.4089 ms
+2026-11-10 21:15:04.901 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 50.0606 ms
+2026-11-10 21:15:07.229 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 63.6736 ms
+2026-11-10 21:15:17.654 -03:00 [INF] HTTP POST /api/turnos respondió 200 en 296.2492 ms
+2026-11-10 21:15:17.821 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 27.5920 ms
+2026-11-10 21:15:28.183 -03:00 [INF] HTTP GET /api/productos respondió 200 en 29.3086 ms
+2026-11-10 21:15:32.348 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 21.2694 ms
+2026-11-10 21:15:47.633 -03:00 [INF] HTTP POST /api/Usuarios/login respondió 200 en 138.6551 ms
+2026-11-10 21:17:47.488 -03:00 [INF] HTTP POST /api/Usuarios/login respondió 200 en 96.5902 ms
+2026-11-10 21:17:49.598 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 65.5563 ms
+2026-11-10 21:17:53.402 -03:00 [INF] HTTP GET /api/productos respondió 200 en 62.8594 ms
+2026-11-10 21:17:57.363 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 79.8378 ms
+2026-11-10 21:18:03.887 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 34.2771 ms
+2026-11-10 21:18:05.308 -03:00 [INF] HTTP GET /api/productos respondió 200 en 34.7002 ms
+2026-11-10 21:18:20.148 -03:00 [WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+2026-11-10 21:18:20.200 -03:00 [WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+2026-11-10 21:18:20.217 -03:00 [INF] HTTP POST /api/pedidos respondió 200 en 95.0336 ms
+2026-11-10 21:18:24.571 -03:00 [INF] HTTP GET /api/productos respondió 200 en 155.0323 ms
+2026-11-10 21:20:01.982 -03:00 [INF] HTTP POST /api/Usuarios/login respondió 200 en 80.2886 ms
+2026-11-10 21:20:09.505 -03:00 [INF] HTTP GET /api/productos respondió 200 en 34.2183 ms
+2026-11-10 21:20:13.251 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 44.1453 ms
+2026-11-10 21:27:19.751 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 216.0456 ms
+2026-11-10 21:27:20.925 -03:00 [INF] HTTP GET /api/productos respondió 200 en 32.2789 ms
+2026-11-10 21:27:34.529 -03:00 [INF] HTTP POST /api/Usuarios/login respondió 200 en 48.9199 ms
+2026-11-10 21:27:40.206 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 44.5804 ms
+2026-11-10 21:27:48.383 -03:00 [INF] HTTP GET /api/productos respondió 200 en 30.3272 ms
+2026-11-10 21:27:51.949 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 53.3550 ms
+2026-11-10 21:27:57.727 -03:00 [WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+2026-11-10 21:27:57.756 -03:00 [WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+2026-11-10 21:27:57.771 -03:00 [INF] HTTP POST /api/pedidos respondió 200 en 55.4857 ms
+2026-11-10 21:27:58.001 -03:00 [INF] HTTP GET /api/pedidos/mis-pedidos respondió 200 en 191.9102 ms
+2026-11-10 21:28:14.732 -03:00 [INF] HTTP GET /api/productos respondió 200 en 79.9938 ms
+2026-11-10 21:28:17.402 -03:00 [INF] HTTP GET /api/pedidos/mis-pedidos respondió 200 en 124.4511 ms
+2026-11-10 21:28:18.529 -03:00 [INF] HTTP GET /api/productos respondió 200 en 114.1260 ms
+2026-11-10 21:30:59.221 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 96.8593 ms
+2026-11-10 21:31:53.632 -03:00 [INF] HTTP GET /api/pedidos/mis-pedidos respondió 200 en 68.2151 ms
+2026-11-10 21:38:42.817 -03:00 [INF] Migraciones aplicadas exitosamente en la base de datos.
+2026-11-10 21:38:43.227 -03:00 [INF] Now listening on: https://localhost:7133
+2026-11-10 21:38:43.231 -03:00 [INF] Now listening on: http://localhost:5253
+2026-11-10 21:38:43.314 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-10 21:38:43.334 -03:00 [INF] Hosting environment: Development
+2026-11-10 21:38:43.346 -03:00 [INF] Content root path: C:\Users\Joaquin Seitz\Desktop\GitHub Repositorios\MOERBackend
+2026-11-10 21:40:20.178 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 24.3733 ms
+2026-11-10 21:40:21.281 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 1065.2778 ms
+2026-11-10 21:40:23.211 -03:00 [INF] HTTP OPTIONS /api/productos respondió 204 en 1.3778 ms
+2026-11-10 21:40:23.400 -03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-11-10 21:40:23.406 -03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-11-10 21:40:23.496 -03:00 [INF] HTTP GET /api/productos respondió 200 en 277.4150 ms
+2026-11-10 21:40:24.099 -03:00 [INF] HTTP GET /uploads/prod_1_b1058bfb-e851-4e91-9cbd-fe8d211b1087.png respondió 304 en 103.4013 ms
+2026-11-10 21:40:33.518 -03:00 [INF] HTTP OPTIONS /api/turnos/mis-turnos respondió 204 en 0.1614 ms
+2026-11-10 21:40:33.651 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 120.5440 ms
+2026-11-10 21:40:35.902 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.1036 ms
+2026-11-10 21:40:35.933 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 26.1767 ms
+2026-11-10 21:40:44.799 -03:00 [INF] HTTP OPTIONS /api/turnos respondió 204 en 0.2135 ms
+2026-11-10 21:40:45.321 -03:00 [INF] HTTP POST /api/turnos respondió 200 en 517.5503 ms
+2026-11-10 21:40:45.409 -03:00 [INF] HTTP OPTIONS /api/turnos/mis-turnos respondió 204 en 0.1300 ms
+2026-11-10 21:40:45.554 -03:00 [INF] HTTP GET /api/turnos/mis-turnos respondió 200 en 105.0478 ms
+2026-11-10 21:40:55.577 -03:00 [INF] HTTP OPTIONS /api/pedidos/mis-pedidos respondió 204 en 0.1634 ms
+2026-11-10 21:40:55.826 -03:00 [INF] HTTP GET /api/pedidos/mis-pedidos respondió 200 en 234.4053 ms
+2026-11-10 21:41:06.840 -03:00 [INF] HTTP OPTIONS /api/productos respondió 204 en 0.0967 ms
+2026-11-10 21:41:06.865 -03:00 [INF] HTTP GET /api/productos respondió 200 en 19.2109 ms
+2026-11-10 21:41:07.419 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.3350 ms
+2026-11-10 21:41:07.498 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 28.1248 ms
+2026-11-10 21:41:38.385 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 0.1016 ms
+2026-11-10 21:41:38.603 -03:00 [INF] HTTP POST /api/usuarios/login respondió 200 en 203.3303 ms
+2026-11-10 21:41:41.642 -03:00 [INF] HTTP OPTIONS /api/turnos/agenda respondió 204 en 0.1294 ms
+2026-11-10 21:41:41.709 -03:00 [INF] HTTP GET /api/turnos/agenda respondió 200 en 60.9593 ms
+2026-11-10 21:42:25.521 -03:00 [INF] HTTP OPTIONS /api/pedidos respondió 204 en 0.1179 ms
+2026-11-10 21:42:25.656 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 126.8315 ms
+2026-11-10 21:42:39.726 -03:00 [INF] HTTP OPTIONS /api/productos/admin respondió 204 en 0.2650 ms
+2026-11-10 21:42:39.762 -03:00 [INF] HTTP GET /api/productos/admin respondió 200 en 24.7068 ms
+2026-11-10 21:42:41.975 -03:00 [INF] HTTP OPTIONS /api/categorias/productos respondió 204 en 0.1138 ms
+2026-11-10 21:42:42.023 -03:00 [INF] HTTP GET /api/categorias/productos respondió 200 en 39.8925 ms
+2026-11-10 21:43:02.887 -03:00 [INF] HTTP OPTIONS /api/productos respondió 204 en 0.1392 ms
+2026-11-10 21:43:02.986 -03:00 [INF] HTTP POST /api/productos respondió 200 en 94.8970 ms
+2026-11-10 21:43:03.037 -03:00 [INF] HTTP OPTIONS /api/productos/admin respondió 204 en 0.1327 ms
+2026-11-10 21:43:03.062 -03:00 [INF] HTTP GET /api/productos/admin respondió 200 en 17.6001 ms
+2026-11-10 21:43:05.775 -03:00 [INF] HTTP GET /api/productos respondió 200 en 18.5725 ms
+2026-11-10 21:43:10.950 -03:00 [INF] HTTP OPTIONS /api/productos/admin respondió 204 en 0.2693 ms
+2026-11-10 21:43:10.997 -03:00 [INF] HTTP GET /api/productos/admin respondió 200 en 39.4441 ms
+2026-11-10 21:43:17.854 -03:00 [INF] HTTP OPTIONS /api/productos/4/imagen respondió 204 en 0.3397 ms
+2026-11-10 21:43:18.010 -03:00 [INF] HTTP POST /api/productos/4/imagen respondió 200 en 142.2214 ms
+2026-11-10 21:43:18.031 -03:00 [INF] HTTP OPTIONS /api/productos/admin respondió 204 en 0.0709 ms
+2026-11-10 21:43:18.065 -03:00 [INF] HTTP GET /api/productos/admin respondió 200 en 20.0258 ms
+2026-11-10 21:43:20.893 -03:00 [INF] HTTP OPTIONS /api/productos respondió 204 en 0.0687 ms
+2026-11-10 21:43:20.998 -03:00 [INF] HTTP GET /api/productos respondió 200 en 51.2080 ms
+2026-11-10 21:43:21.162 -03:00 [INF] HTTP GET /uploads/prod_4_b79458d5-22ff-436d-b3d1-c14068f82d93.png respondió 200 en 95.5043 ms
+2026-11-10 21:43:30.981 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.1814 ms
+2026-11-10 21:43:31.036 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 50.2780 ms
+2026-11-10 21:43:34.271 -03:00 [INF] HTTP OPTIONS /api/categorias/servicios respondió 204 en 0.3077 ms
+2026-11-10 21:43:34.341 -03:00 [INF] HTTP GET /api/categorias/servicios respondió 200 en 63.5040 ms
+2026-11-10 21:43:41.246 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.0891 ms
+2026-11-10 21:43:41.366 -03:00 [ERR] An exception occurred in the database while saving changes for context type 'MoerEstetica.API.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Servicios_Categorias_Servicios_IdCategoriaServicio". The conflict occurred in database "MoerEsteticaDB", table "dbo.Categorias_Servicios", column 'IdCategoriaServicio'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:978f5d4f-ef38-4212-9bf9-2f525eb80f06
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Servicios_Categorias_Servicios_IdCategoriaServicio". The conflict occurred in database "MoerEsteticaDB", table "dbo.Categorias_Servicios", column 'IdCategoriaServicio'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:978f5d4f-ef38-4212-9bf9-2f525eb80f06
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-11-10 21:43:41.498 -03:00 [ERR] HTTP POST /api/servicios respondió 500 en 247.4678 ms
+2026-11-10 21:44:27.377 -03:00 [INF] HTTP OPTIONS /api/productos respondió 204 en 0.1150 ms
+2026-11-10 21:44:27.411 -03:00 [INF] HTTP GET /api/productos respondió 200 en 20.2152 ms
+2026-11-10 21:44:44.730 -03:00 [INF] HTTP OPTIONS /api/ingresoproductos respondió 204 en 0.0847 ms
+2026-11-10 21:44:44.913 -03:00 [WRN] Savepoints are disabled because Multiple Active Result Sets (MARS) is enabled. If 'SaveChanges' fails, then the transaction cannot be automatically rolled back to a known clean state. Instead, the transaction should be rolled back by the application before retrying 'SaveChanges'. See https://go.microsoft.com/fwlink/?linkid=2149338 for more information and examples. To identify the code which triggers this warning, call 'ConfigureWarnings(w => w.Throw(SqlServerEventId.SavepointsDisabledBecauseOfMARS))'.
+2026-11-10 21:44:45.004 -03:00 [INF] HTTP POST /api/ingresoproductos respondió 200 en 269.3855 ms
+2026-11-10 21:44:48.619 -03:00 [INF] HTTP OPTIONS /api/pagos/metodos respondió 204 en 0.0813 ms
+2026-11-10 21:44:48.701 -03:00 [INF] HTTP GET /api/pagos/metodos respondió 200 en 60.9022 ms
+2026-11-10 21:44:49.017 -03:00 [INF] HTTP OPTIONS /api/turnos/agenda respondió 204 en 0.0750 ms
+2026-11-10 21:44:49.083 -03:00 [INF] HTTP GET /api/turnos/agenda respondió 200 en 41.3839 ms
+2026-11-10 21:44:49.101 -03:00 [INF] HTTP OPTIONS /api/pedidos respondió 204 en 0.0661 ms
+2026-11-10 21:44:49.176 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 70.0126 ms
+2026-11-10 21:45:14.325 -03:00 [INF] HTTP OPTIONS /api/pagos respondió 204 en 0.4947 ms
+2026-11-10 21:45:14.470 -03:00 [INF] HTTP POST /api/pagos respondió 200 en 138.8602 ms
+2026-11-10 21:45:14.509 -03:00 [INF] HTTP OPTIONS /api/turnos/agenda respondió 204 en 0.0695 ms
+2026-11-10 21:45:14.557 -03:00 [INF] HTTP GET /api/turnos/agenda respondió 200 en 30.0584 ms
+2026-11-10 21:45:14.571 -03:00 [INF] HTTP OPTIONS /api/pedidos respondió 204 en 0.0823 ms
+2026-11-10 21:45:14.630 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 49.1818 ms
+2026-11-10 22:07:25.694 -03:00 [INF] Migraciones aplicadas exitosamente en la base de datos.
+2026-11-10 22:07:26.417 -03:00 [INF] Now listening on: https://localhost:7133
+2026-11-10 22:07:26.435 -03:00 [INF] Now listening on: http://localhost:5253
+2026-11-10 22:07:26.606 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-11-10 22:07:26.608 -03:00 [INF] Hosting environment: Development
+2026-11-10 22:07:26.610 -03:00 [INF] Content root path: C:\Users\Joaquin Seitz\Desktop\GitHub Repositorios\MOERBackend
+2026-11-10 22:07:44.198 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 12.7068 ms
+2026-11-10 22:07:45.416 -03:00 [INF] HTTP POST /api/usuarios/login respondió 200 en 1187.2078 ms
+2026-11-10 22:07:49.996 -03:00 [INF] HTTP OPTIONS /api/pedidos respondió 204 en 1.5911 ms
+2026-11-10 22:07:50.621 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 619.6882 ms
+2026-11-10 22:07:53.502 -03:00 [INF] HTTP OPTIONS /api/pagos/metodos respondió 204 en 0.2244 ms
+2026-11-10 22:07:53.561 -03:00 [INF] HTTP GET /api/pagos/metodos respondió 200 en 44.0924 ms
+2026-11-10 22:07:54.104 -03:00 [INF] HTTP OPTIONS /api/turnos/agenda respondió 204 en 0.3278 ms
+2026-11-10 22:07:54.233 -03:00 [INF] HTTP GET /api/turnos/agenda respondió 200 en 109.8320 ms
+2026-11-10 22:07:54.347 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 60.9558 ms
+2026-11-10 22:08:20.257 -03:00 [INF] HTTP OPTIONS /api/pedidos respondió 204 en 0.1631 ms
+2026-11-10 22:08:20.386 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 119.0408 ms
+2026-11-10 22:08:24.144 -03:00 [INF] HTTP OPTIONS /api/pedidos/12/estado respondió 204 en 0.3458 ms
+2026-11-10 22:08:24.530 -03:00 [INF] HTTP PATCH /api/pedidos/12/estado respondió 200 en 378.6893 ms
+2026-11-10 22:08:24.622 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 44.7917 ms
+2026-11-10 22:08:29.905 -03:00 [INF] HTTP OPTIONS /api/pagos/metodos respondió 204 en 0.1998 ms
+2026-11-10 22:08:29.923 -03:00 [INF] HTTP GET /api/pagos/metodos respondió 200 en 11.1819 ms
+2026-11-10 22:08:30.042 -03:00 [INF] HTTP OPTIONS /api/turnos/agenda respondió 204 en 0.1843 ms
+2026-11-10 22:08:30.113 -03:00 [INF] HTTP GET /api/turnos/agenda respondió 200 en 62.2246 ms
+2026-11-10 22:08:30.127 -03:00 [INF] HTTP OPTIONS /api/pedidos respondió 204 en 0.1025 ms
+2026-11-10 22:08:30.180 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 46.0756 ms
+2026-11-10 22:08:38.392 -03:00 [INF] HTTP OPTIONS /api/pagos respondió 204 en 0.1590 ms
+2026-11-10 22:08:38.674 -03:00 [INF] HTTP POST /api/pagos respondió 200 en 275.2888 ms
+2026-11-10 22:08:38.714 -03:00 [INF] HTTP OPTIONS /api/turnos/agenda respondió 204 en 0.0998 ms
+2026-11-10 22:08:38.752 -03:00 [INF] HTTP GET /api/turnos/agenda respondió 200 en 29.8790 ms
+2026-11-10 22:08:38.760 -03:00 [INF] HTTP OPTIONS /api/pedidos respondió 204 en 0.0855 ms
+2026-11-10 22:08:38.803 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 37.4170 ms
+2026-11-10 22:08:42.202 -03:00 [INF] HTTP OPTIONS /api/productos/admin respondió 204 en 0.1098 ms
+2026-11-10 22:08:42.251 -03:00 [INF] HTTP GET /api/productos/admin respondió 200 en 43.4060 ms
+2026-11-10 22:08:44.304 -03:00 [INF] HTTP OPTIONS /api/pedidos respondió 204 en 0.1083 ms
+2026-11-10 22:08:44.377 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 65.0700 ms
+2026-11-10 22:08:52.759 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.1124 ms
+2026-11-10 22:08:52.809 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 41.6227 ms
+2026-11-10 22:08:54.788 -03:00 [INF] HTTP OPTIONS /api/categorias/servicios respondió 204 en 0.1030 ms
+2026-11-10 22:08:54.850 -03:00 [INF] HTTP GET /api/categorias/servicios respondió 200 en 56.5236 ms
+2026-11-10 22:09:12.421 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.1163 ms
+2026-11-10 22:09:12.622 -03:00 [ERR] An exception occurred in the database while saving changes for context type 'MoerEstetica.API.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Servicios_Categorias_Servicios_IdCategoriaServicio". The conflict occurred in database "MoerEsteticaDB", table "dbo.Categorias_Servicios", column 'IdCategoriaServicio'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:252b0c53-62f9-48e2-a98e-1cb7ffa7b6c1
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Servicios_Categorias_Servicios_IdCategoriaServicio". The conflict occurred in database "MoerEsteticaDB", table "dbo.Categorias_Servicios", column 'IdCategoriaServicio'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:252b0c53-62f9-48e2-a98e-1cb7ffa7b6c1
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-11-10 22:09:12.741 -03:00 [ERR] HTTP POST /api/servicios respondió 500 en 286.6781 ms
+2026-11-10 22:09:22.086 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.0828 ms
+2026-11-10 22:09:22.111 -03:00 [ERR] An exception occurred in the database while saving changes for context type 'MoerEstetica.API.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Servicios_Categorias_Servicios_IdCategoriaServicio". The conflict occurred in database "MoerEsteticaDB", table "dbo.Categorias_Servicios", column 'IdCategoriaServicio'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:252b0c53-62f9-48e2-a98e-1cb7ffa7b6c1
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Servicios_Categorias_Servicios_IdCategoriaServicio". The conflict occurred in database "MoerEsteticaDB", table "dbo.Categorias_Servicios", column 'IdCategoriaServicio'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:252b0c53-62f9-48e2-a98e-1cb7ffa7b6c1
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-11-10 22:09:22.191 -03:00 [ERR] HTTP POST /api/servicios respondió 500 en 99.9472 ms
+2026-11-10 22:15:13.060 -03:00 [INF] HTTP OPTIONS /api/usuarios/login respondió 204 en 0.1902 ms
+2026-11-10 22:15:13.337 -03:00 [INF] HTTP POST /api/usuarios/login respondió 200 en 265.7806 ms
+2026-11-10 22:15:16.018 -03:00 [INF] HTTP OPTIONS /api/turnos/agenda respondió 204 en 0.0697 ms
+2026-11-10 22:15:16.058 -03:00 [INF] HTTP GET /api/turnos/agenda respondió 200 en 32.9973 ms
+2026-11-10 22:15:27.139 -03:00 [INF] HTTP OPTIONS /api/turnos/agenda respondió 204 en 0.0782 ms
+2026-11-10 22:15:27.179 -03:00 [INF] HTTP GET /api/turnos/agenda respondió 200 en 24.9928 ms
+2026-11-10 22:15:33.024 -03:00 [INF] HTTP OPTIONS /api/pedidos respondió 204 en 0.0831 ms
+2026-11-10 22:15:33.092 -03:00 [INF] HTTP GET /api/pedidos respondió 200 en 58.0161 ms
+2026-11-10 22:15:36.149 -03:00 [INF] HTTP OPTIONS /api/productos/admin respondió 204 en 0.1684 ms
+2026-11-10 22:15:36.170 -03:00 [INF] HTTP GET /api/productos/admin respondió 200 en 14.0535 ms
+2026-11-10 22:15:38.401 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.1465 ms
+2026-11-10 22:15:38.422 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 14.9493 ms
+2026-11-10 22:15:39.965 -03:00 [INF] HTTP OPTIONS /api/categorias/servicios respondió 204 en 0.0675 ms
+2026-11-10 22:15:39.980 -03:00 [INF] HTTP GET /api/categorias/servicios respondió 200 en 9.9367 ms
+2026-11-10 22:16:00.582 -03:00 [INF] HTTP OPTIONS /api/servicios respondió 204 en 0.4296 ms
+2026-11-10 22:16:00.607 -03:00 [INF] HTTP POST /api/servicios respondió 200 en 18.1859 ms
+2026-11-10 22:16:00.718 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 10.0773 ms
+2026-11-10 22:16:03.818 -03:00 [INF] HTTP GET /api/servicios respondió 200 en 19.3192 ms
+2026-11-10 22:16:11.974 -03:00 [INF] HTTP OPTIONS /api/productos respondió 204 en 0.0847 ms
+2026-11-10 22:16:12.006 -03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-11-10 22:16:12.009 -03:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-11-10 22:16:12.032 -03:00 [INF] HTTP GET /api/productos respondió 200 en 45.4059 ms
